@@ -4,7 +4,7 @@ import { images } from '../assets'
 
 function MemberCards() {
   return (
-    <>
+    <div className='relative'>
         <svg width="0" height="0" className='absolute'>
             <clipPath id="custom-shape" clipPathUnits="objectBoundingBox">
             <path
@@ -18,9 +18,13 @@ function MemberCards() {
             <img src={images.profike} alt="" className='w-full h-full object-cover'/>
             <div className='w-full h-full bg-gradient-to-t from-[#262655] to-[rgba(38, 38, 85, 0)] to-35% aspect-square absolute z-10 top-0' style={{clipPath: 'url(#custom-shape)'}}>
                 <p className='text-[36px] bottom-0 absolute text-center w-full font-bold mb-4'>Arya Gami</p>
+                
             </div>
         </div>
-    </>
+        <div className="right-0 absolute top-4 w-[40%] bg-[#6363FF] p-4 rounded-full flex items-center justify-center h-[12%]">
+            <p className='font-semibold text-2xl'>UI/UX</p>
+        </div>
+    </div>
     
   )
 }
