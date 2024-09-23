@@ -1,3 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body{
+    background-color: rgba(20, 20, 30, 0.9333);
+    color: white;
+    font: "Instrument Sans";
+}
+
+.clippath{
+    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 65% 20%, 65% 0);
+}
