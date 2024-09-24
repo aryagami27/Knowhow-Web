@@ -2,7 +2,7 @@ import React from 'react'
 
 import { images } from '../assets'
 
-function MemberCards() {
+function MemberCards({name,img}) {
   return (
     <div className='relative'>
         <svg width="0" height="0" className='absolute'>
@@ -21,7 +21,7 @@ function MemberCards() {
                 
             </div>
         </div>
-        <div className="right-0 absolute top-4 w-[40%] bg-[#6363FF] p-4 rounded-full flex items-center justify-center h-[12%]">
+        <div className="right-0 top-0 absolute w-[40%] bg-[#6363FF] p-4 rounded-full flex items-center justify-center h-[15%]">
             <p className='font-semibold text-2xl'>UI/UX</p>
         </div>
     </div>
