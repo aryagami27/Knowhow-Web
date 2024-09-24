@@ -2,16 +2,16 @@ import React from 'react';
 
 function Events() {
   return (
-    <div className="mt-36 mb-32">
+    <div className="mt-20 mb-24">
       {/* Title */}
       <h1 className="text-4xl font-bold">
         Upcoming <span style={{ color: '#AF66DF' }}>Events</span>
       </h1>
 
       {/* Event Container */}
-      <div className="mt-8 space-y-6">
+      <div className="mt-8 space-y-6 w-full">
         {/* Event Box */}
-        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md">
+        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full">
           {/* Event Details */}
           <div>
             <h2 className="text-xl font-bold text-white">Event Title</h2>
@@ -25,7 +25,7 @@ function Events() {
         </div>
 
         {/* Additional Event Box Example (you can repeat this) */}
-        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md">
+        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full">
           <div>
             <h2 className="text-xl font-bold text-white">Another Event</h2>
             <p className="text-gray-400">November 15th - November 17th, 2024</p>
@@ -40,4 +40,3 @@ function Events() {
 }
 
 export default Events;
-
