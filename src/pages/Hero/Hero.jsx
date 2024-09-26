@@ -50,7 +50,7 @@ function Hero() {
           <p style={{ color: '#AF66DF' }}>change</p>
         </div>
 
-        <button className="flex items-center justify-center space-x-2 bg-[#03A21C] text-black px-6 py-3 rounded-full hover:bg-green-500">
+        <button className="flex items-center justify-center space-x-2 bg-[#03A21C] text-black px-6 py-3 rounded-full hover:bg-green-500 transition-colors duration-200">
           <FontAwesomeIcon icon={faWhatsapp} size='lg' color='white'/>
           <span className='text-white'>Join our Community</span>
         </button>

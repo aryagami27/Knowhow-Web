@@ -16,7 +16,7 @@ function About() {
         <div className="mt-24">
           <AboutCard
             title="The Spark"
-            content="KnowHow is the leading platform driving change through collaboration and knowledge-sharing. Join us in creating a brighter, more connected future."
+            content="Every idea begins as a spark—fueled by curiosity, shaped by experience, and driven by a desire to learn. KnowHow was born from that very spark, a vision to create a space where knowledge flows freely and solutions take form."
             imageSrc="https://via.placeholder.com/200x241"
           />
         </div>
@@ -24,7 +24,7 @@ function About() {
         <div className="mt-24">
           <AboutCardRight
             title="The Journey"
-            content="KnowHow is the leading platform driving change through collaboration and knowledge-sharing. Join us in creating a brighter, more connected future."
+            content="Like a path winding through uncharted territory, we guide the seekers—the innovators, the problem solvers—on their quest for answers. With each step, new doors open, leading to discovery, growth, and mastery."
             imageSrc="https://via.placeholder.com/200x241"
           />
         </div>
@@ -33,7 +33,7 @@ function About() {
         <div className="mt-24">
           <AboutCard
             title="Unlock your potential with KnowHow"
-            content="KnowHow is the leading platform driving change through collaboration and knowledge-sharing. Join us in creating a brighter, more connected future."
+            content="At KnowHow, we provide the tools, resources, and community to turn your curiosity into action. Whether you're looking to learn, share, or innovate, KnowHow is where your next big idea begins."
             imageSrc="https://via.placeholder.com/200x241"
           />
         </div>
