@@ -11,10 +11,10 @@ const Modal = ({ isOpen, onClose, title, image, extraInfo }) => {
         <div className="flex items-center mt-4">
           <img src={image} alt={title} className="w-80 h-auto mr-4 rounded-lg" />
           <div className="flex-grow text-white">
-            <p><span className='text-[#AF66DF] font-bold italic'>Our take:</span> <br/>{extraInfo}</p>
+            <p><span className='text-[#AF66DF] text-xl font-bold italic'>Our take:</span> <br/>{extraInfo}</p>
           </div>
         </div>
-        <button onClick={onClose} className="bg-[#AF66DF] text-white border-none px-4 py-2 rounded-md mt-4">
+        <button onClick={onClose} className="bg-[#AF66DF] hover:bg-red-600 transition-all duration-500 ease-out text-white border-none px-4 py-2 rounded-md mt-4">
           Close
         </button>
       </div>

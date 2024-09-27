@@ -56,7 +56,7 @@ function Header() {
           <div className="mr-14"> {/* Container for the button */}
             <Link to="/join" className="flex items-center bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-400 transition-colors duration-200">
               <FontAwesomeIcon icon={faWhatsapp} className="mr-2" /> {/* WhatsApp Icon */}
-              Join our Community
+              <p className="font-">Join our Community</p>
             </Link>
           </div>
         )}

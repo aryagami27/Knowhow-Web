@@ -23,7 +23,7 @@ const DomainCard = ({ title, image, content, onReadMore }) => {
             <p>{content}</p>
           </div>
           <button 
-            className="read-more-button bg-[#AF66DF] text-white border-none text-sm px-2 py-2 cursor-pointer rounded-md" 
+            className="read-more-button bg-[#AF66DF] hover:bg-[#9528df] transition-all duration-500 ease-out text-white border-none text-sm px-2 py-2 cursor-pointer rounded-md" 
             onClick={onReadMore} // Call the onReadMore handler
           >
             Read More

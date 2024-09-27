@@ -4,14 +4,14 @@ import MemberCards from '../../components/MemberCards';
 function Members() {
   const members = [
     { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
-    { name: 'John Doe', img: 'profile2.png', role: 'Frontend Dev' },
-    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend Dev' },
+    { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
+    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
     { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
-    { name: 'John Doe', img: 'profile2.png', role: 'Frontend Dev' },
-    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend Dev' },
+    { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
+    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
     { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
-    { name: 'John Doe', img: 'profile2.png', role: 'Frontend Dev' },
-    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend Dev' },
+    { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
+    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
     // Add more members here
   ];
 

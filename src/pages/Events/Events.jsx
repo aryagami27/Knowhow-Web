@@ -9,7 +9,7 @@ function Events() {
       </h1>
 
       {/* Event Container */}
-      <div className="mt-8 space-y-6 w-full">
+      <div className="mt-8 space-y-6 w-full ">
         {/* Event Box */}
         <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full">
           {/* Event Details */}

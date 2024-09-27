@@ -113,9 +113,9 @@ function Domains() {
         </p>
 
         {/* Simple Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div className="flex flex-wrap w-full gap-4 justify-center">
           {cards.map((card) => (
-            <div key={card.id} className="w-full">
+            <div key={card.id} className="">
               <DomainCard
                 title={card.title}
                 image={card.image}
