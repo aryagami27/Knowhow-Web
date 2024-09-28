@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { images } from '../assets'
 
 function MemberCards({name,img,role}) {

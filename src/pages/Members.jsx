@@ -1,4 +1,3 @@
-import React from 'react';
 import MemberCards from '../components/MemberCards';
 
 function Members() {
@@ -12,7 +11,6 @@ function Members() {
     { name: 'Arya Gami', img: 'profile1.png', role: 'App-Dev' },
     { name: 'John Doe', img: 'profile2.png', role: 'Blockchain' },
     { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
-    // Add more members here
   ];
 
   return (

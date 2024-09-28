@@ -1,6 +1,3 @@
-import React from 'react'
-import AboutCardRight from '../components/AboutCards/AboutCardRight'
-import AboutCard from '../components/AboutCards/AboutCard'
 import Events from './Events'
 
 function About() {
@@ -16,7 +13,7 @@ function About() {
         </p>
       </div>
       <div className="w-full flex justify-center">
-        <div className="mt-16 flex max-w-[1200px] max-h-[800px] justify-center items-center">
+        <div className="mt-4 flex max-w-[1200px] max-h-[800px] justify-center items-center">
         <div className="grid grid-cols-6 gap-2">
           <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-4 row-span-1 p-5 aspect-[4/1]">
             <p className='font-bold text-2xl'>The Spark</p>

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../CSS/domainCard.css';
-import { motion } from 'framer-motion';
 
 const DomainCard = ({ title, image, content, onReadMore }) => {
   const [flipped, setFlipped] = useState(false);

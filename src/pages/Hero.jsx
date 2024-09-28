@@ -1,4 +1,3 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import About from './About';
@@ -10,7 +9,10 @@ import Domains from './Domains';
 
 function Hero() {
   return (
-    <div className="flex flex-col bg-[#13131C]">
+    <div className="flex flex-col bg-[#13131C] relative">
+      <div className="absolute top-2 left-4">
+        <img src='./logo2.png' className='h-14' />
+      </div>
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
         <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
         <p className='font-bold md:text-7xl text-center text-5xl'>The catalyst for </p>
@@ -20,9 +22,9 @@ function Hero() {
             loop={true}
             cursor
             cursorStyle='_'
-            typeSpeed={100}
+            typeSpeed={150}
             deleteSpeed={50}
-            delaySpeed={1000}
+            delaySpeed={2000}
           />
         </div>
         <div className="mt-8">

@@ -1,20 +1,18 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faTwitter, faInstagram, faWhatsapp, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
     <footer className="bg-[#17173A] text-white py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <img src='./logo2.png' className='w-[300px] sm:w-full' />
             <p className="text-gray-400">
               Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
             </p>
           </div>
-          <div>
+          {/* <div>
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
@@ -28,7 +26,7 @@ function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div> */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-2">

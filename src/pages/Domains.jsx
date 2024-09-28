@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import DomainCard from '../components/DomainCards';
-import Modal from '../components/Modal'; // Import the Modal component
+import Modal from '../components/Modal';
 
 function Domains() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -93,7 +93,6 @@ function Domains() {
   return (
     <div 
       className="min-h-screen flex flex-col items-center justify-center px-10 py-32" 
-      // style={{ background: 'linear-gradient(to top, #17173A 14%, #13131C 25%)' }}
     >
       <Modal 
         isOpen={modalOpen} 
@@ -104,15 +103,12 @@ function Domains() {
       />
 
       <div className="relative w-full mx-6">
-        {/* Title and Description */}
         <h1 className="text-center text-4xl font-bold text-white mb-4">
           The <span style={{ color: '#AF66DF' }}>KnowHow</span> Domains
         </h1>
         <p className="text-center text-lg text-gray-300 mb-12">
           Discover the various domains that are being cultivated in this community
         </p>
-
-        {/* Simple Grid Layout */}
         <div className="flex flex-wrap w-full gap-2 justify-center">
           {cards.map((card) => (
             <div key={card.id} className="">
