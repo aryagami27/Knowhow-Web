@@ -1,5 +1,5 @@
 import React from 'react';
-import MemberCards from '../../components/MemberCards';
+import MemberCards from '../components/MemberCards';
 
 function Members() {
   const members = [

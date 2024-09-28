@@ -1,10 +1,10 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import About from '../About/About';
+import About from './About';
 import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
-import MarqueeCards from '../../components/MarqueeCards';
+import MarqueeCards from '../components/MarqueeCards';
 
 function Hero() {
   return (

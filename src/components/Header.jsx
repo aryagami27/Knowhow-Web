@@ -6,7 +6,7 @@ import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 function Header() {
   const [scrollDirection, setScrollDirection] = useState('up');
   const [lastScrollY, setLastScrollY] = useState(0);
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,7 +52,7 @@ function Header() {
         
       </div>
       {location.pathname !== '/' && (
-          <div className="sm:absolute sm:right-4 sm:top-0 ml-2"> {/* Container for the button */}
+          <div className="sm:absolute sm:right-4 sm:top-0 ml-2">
             <Link to="/join" className="flex items-center bg-green-600 text-white rounded-full px-6 h-[60px] hover:bg-green-500 transition-colors duration-200">
               <FontAwesomeIcon icon={faWhatsapp} className="xl:mr-2 size-5" /> {/* WhatsApp Icon */}
               <p className="hidden xl:block">Join our Community</p>

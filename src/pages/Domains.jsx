@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import DomainCard from '../../components/domaincards';
-import Modal from '../../components/Modal'; // Import the Modal component
+import DomainCard from '../components/DomainCards';
+import Modal from '../components/Modal'; // Import the Modal component
 
 function Domains() {
   const [modalOpen, setModalOpen] = useState(false);

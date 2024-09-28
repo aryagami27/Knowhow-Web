@@ -1,7 +1,7 @@
 import React from 'react'
-import AboutCardRight from '../../components/AboutCards/AboutCardRight'
-import AboutCard from '../../components/AboutCards/AboutCard'
-import Events from '../Events/Events'
+import AboutCardRight from '../components/AboutCards/AboutCardRight'
+import AboutCard from '../components/AboutCards/AboutCard'
+import Events from './Events'
 
 function About() {
   return (
