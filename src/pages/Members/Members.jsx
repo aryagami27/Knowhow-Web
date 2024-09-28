@@ -6,11 +6,11 @@ function Members() {
     { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
     { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
     { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
-    { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
+    { name: 'Arya Gami', img: 'profile1.png', role: 'Web-Dev' },
     { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
-    { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
-    { name: 'Arya Gami', img: 'profile1.png', role: 'UI/UX' },
-    { name: 'John Doe', img: 'profile2.png', role: 'Frontend' },
+    { name: 'Jane Smith', img: 'profile3.png', role: 'Cyber-Sec' },
+    { name: 'Arya Gami', img: 'profile1.png', role: 'App-Dev' },
+    { name: 'John Doe', img: 'profile2.png', role: 'Blockchain' },
     { name: 'Jane Smith', img: 'profile3.png', role: 'Backend' },
     // Add more members here
   ];
@@ -26,7 +26,7 @@ function Members() {
         Meet the talented individuals who drive our mission forward.
       </p>
       
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
         {members.map((member, index) => (
           <MemberCards key={index} name={member.name} img={member.img} role={member.role} />
         ))}

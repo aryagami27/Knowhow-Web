@@ -10,7 +10,8 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Branding */}
           <div>
-            <h3 className="text-xl font-bold mb-4">LOGO</h3>
+            {/* <h3 className="text-xl font-bold mb-4">LOGO</h3> */}
+            <img src='./logo2.png' />
             <p className="text-gray-400">
             Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
             </p>

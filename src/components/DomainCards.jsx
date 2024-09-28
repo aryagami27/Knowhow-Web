@@ -10,7 +10,7 @@ const DomainCard = ({ title, image, content, onReadMore }) => {
   };
 
   return (
-    <div className="domain-card">
+    <div className="domain-card hover:-translate-y-2 transition-all duration-500 ease-out">
       <div className={`card-inner ${flipped ? 'flipped' : ''}`} onClick={handleFlip}>
         {/* Front Side */}
         <div className="card-face card-front">

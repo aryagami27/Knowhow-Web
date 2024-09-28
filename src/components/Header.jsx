@@ -28,13 +28,16 @@ function Header() {
 
   return (
     <header
-      className={`fixed top-4 left-0 right-0 z-50 transition-transform duration-300 flex flex-row justify-center items-center ${
+      className={`fixed top-4 left-0 right-0 z-50 px-4 transition-transform duration-300 flex flex-row justify-center items-center ${
         scrollDirection === 'down' ? '-translate-y-full' : 'translate-y-0'
       }`}
     >
-      <div className="mx-auto max-w-[971px] flex justify-center items-center w-full px-6 h-[60px] bg-[rgba(63,63,72,0.32)] backdrop-blur-md rounded-full shadow-md">
+      <Link to="/" className="absolute left-4 hidden xl:block">
+            <img src='./logo3.png' className='h-24 mt-1' />
+      </Link>
+      <div className="mx-auto max-w-[700px] flex justify-center items-center w-full px-6 h-[60px] bg-[rgba(63,63,72,0.32)] backdrop-blur-md rounded-full shadow-md">
         {/* Navbar */}
-        <nav className="flex justify-center items-center space-x-28 text-white">
+        <nav className="flex justify-evenly w-full items-center  text-white">
           <Link to="/" className="hover:text-gray-400 transition-colors duration-200">
             Home
           </Link>
@@ -42,10 +45,7 @@ function Header() {
             Domains
           </Link>
           <Link to="/team" className="hover:text-gray-400 transition-colors duration-200">
-            Meet our Team
-          </Link>
-          <Link to="/events" className="hover:text-gray-400 transition-colors duration-200">
-            Events
+            Team
           </Link>
         </nav>
 
@@ -53,10 +53,10 @@ function Header() {
       </div>
       {/* Conditional Button for Non-Home Pages */}
       {location.pathname !== '/' && (
-          <div className="mr-14"> {/* Container for the button */}
-            <Link to="/join" className="flex items-center bg-green-500 text-white rounded-full px-4 py-2 hover:bg-green-400 transition-colors duration-200">
-              <FontAwesomeIcon icon={faWhatsapp} className="mr-2" /> {/* WhatsApp Icon */}
-              <p className="font-">Join our Community</p>
+          <div className="absolute right-4 top-0"> {/* Container for the button */}
+            <Link to="/join" className="flex items-center bg-green-600 text-white rounded-full px-6 h-[60px] hover:bg-green-500 transition-colors duration-200">
+              <FontAwesomeIcon icon={faWhatsapp} className="xl:mr-2 size-6" /> {/* WhatsApp Icon */}
+              <p className="hidden xl:block">Join our Community</p>
             </Link>
           </div>
         )}

@@ -17,11 +17,11 @@ function MemberCards({name,img,role}) {
         <div className='w-full h-full bg-white aspect-square relative' style={{clipPath: 'url(#custom-shape)'}}>
             <img src={images.profike} alt="" className='w-full h-full object-cover'/>
             <div className='w-full h-full bg-gradient-to-t from-[#262655] to-[rgba(38, 38, 85, 0)] to-35% aspect-square absolute z-10 top-0' style={{clipPath: 'url(#custom-shape)'}}>
-                <p className='xl:text-[36px] text-2xl lg:text-3xl bottom-0 absolute text-center w-full font-bold mb-4'>{name || "Arya Gami"}</p>
+                <p className='text-2xl lg:text-3xl bottom-0 absolute text-center w-full font-bold mb-4'>{name || "Arya Gami"}</p>
             </div>
         </div>
-        <div className="right-0 top-0 absolute w-[40%] bg-[#6363FF] p-4 rounded-full flex items-center justify-center h-[15%]">
-            <p className='font-semibold xl:text-2xl '>{role || "UI/UX"}</p>
+        <div className="right-0 top-0 absolute w-[40%] bg-[#6363FF] rounded-full flex items-center justify-center h-[15%] text-sm">
+            <p className='font-semibold xl:text-xl '>{role || "UI/UX"}</p>
         </div>
     </div>
     
