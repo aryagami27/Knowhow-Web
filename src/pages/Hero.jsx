@@ -5,6 +5,7 @@ import About from './About';
 import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import MarqueeCards from '../components/MarqueeCards';
+import { Typewriter } from 'react-simple-typewriter';
 import Domains from './Domains';
 
 function Hero() {
@@ -13,9 +14,19 @@ function Hero() {
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
         <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
         <p className='font-bold md:text-7xl text-center text-5xl'>The catalyst for </p>
-        <p className='font-bold md:text-7xl text-5xl text-center text-[#AF66DF]'>change</p>
+        <div className='font-bold md:text-7xl text-5xl text-center text-[#AF66DF]'>
+          <Typewriter
+            words={['Change', 'Growth', 'Ambition', 'Innovation']}
+            loop={true}
+            cursor
+            cursorStyle='_'
+            typeSpeed={100}
+            deleteSpeed={50}
+            delaySpeed={1000}
+          />
+        </div>
         <div className="mt-8">
-          <Link className="mx-auto flex items-center justify-center max-w-56 bg-green-700 text-white rounded-full h-[60px] hover:bg-green-600 shadow-[#ffffff7e] shadow-inner transition-colors duration-200">
+          <Link className="mx-auto flex items-center justify-center max-w-56 bg-green-700 text-white rounded-full h-[60px] hover:bg-green-600 shadow-[#ffffff4f] shadow-inner transition-colors duration-200">
             <FontAwesomeIcon icon={faWhatsapp} className="mr-2 size-6" />
             <p>Join our Community</p>
           </Link>
