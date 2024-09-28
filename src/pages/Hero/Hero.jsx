@@ -2,61 +2,28 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import About from '../About/About';
-import Events from '../Events/Events';
+import { Link } from 'react-router-dom';
 
 function Hero() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start min-h-screen p-8 py-40" 
-         style={{ background: 'linear-gradient(to bottom, #17173A 14%, #13131C 25%)' }}>
-      
-      {/* Left side */}
-      <div className="relative">
-        <div className="grid grid-rows-3 gap-4">
-          {/* Top Row - No space on the left */}
-          <div className="flex -ml-10">
-            <div className="w-64 h-40 relative rounded-xl shadow-lg mr-2 overflow-hidden hover:w-72 hover:h-48 transition-all duration-200">
-              <img src="./bitcon.jpg" alt="Bitcoin" className="w-full h-full object-cover opacity-60" />
-            </div>
-            <div className="w-64 h-40 relative rounded-xl shadow-lg overflow-hidden hover:w-72 hover:h-48 transition-all duration-200">
-              <img src="./uiux.jpg" alt="UI/UX" className="w-full h-full object-cover opacity-70" />
-            </div>
-          </div>
-
-          {/* Middle Row */}
-          <div className="flex">
-            <div className="w-64 h-40 relative rounded-xl shadow-lg -translate-x-1/2 overflow-hidden hover:w-72 hover:h-48 transition-all duration-200">
-              <img src="./datascience.jpg" alt="Data Science" className="w-full h-full object-cover opacity-60" />
-            </div>
-            <div className="w-64 h-40 relative rounded-xl shadow-lg -ml-[118px] overflow-hidden hover:w-72 hover:h-48 transition-all duration-200">
-              <img src="./ai.jpg" alt="AI" className="w-full h-full object-cover opacity-60" />
-            </div>
-          </div>
-
-          {/* Bottom Row */}
-          <div className="flex justify-center">
-            <div className="w-64 h-40 relative rounded-xl shadow-lg -translate-x-full overflow-hidden hover:w-72 hover:h-48 transition-all duration-200">
-              <img src="./cloud.jpg" alt="Cloud Computing" className="w-full h-full opacity-70" />
-            </div>
-          </div>
+    <div className="flex flex-col bg-[#13131C]">
+      <div className="w-full  bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
+        <p className='font-bold mt-40 text-7xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
+        <p className='font-bold text-7xl text-center'>The catalyst for </p>
+        <p className='font-bold text-7xl text-center text-[#AF66DF]'>change</p>
+        <div className="mt-8">
+          <Link className="mx-auto flex items-center justify-center max-w-56 bg-green-700 text-white rounded-full h-[60px] hover:bg-green-600 shadow-[#ffffff7e] shadow-inner transition-colors duration-200">
+            <FontAwesomeIcon icon={faWhatsapp} className="mr-2 size-6" />
+            <p>Join our Community</p>
+          </Link>
+        </div>
+        <div className="mt-20 mb-10">
+          moving cards
         </div>
       </div>
-
-      {/* Right side */}
-      <div className="space-y-8">
-        {/* Text */}
-        <div className="text-white text-6xl font-bold leading-snug">
-          <p>Know<span style={{ color: '#3954DF' }}>How</span>:</p>
-          <p>The catalyst for</p>
-          <p style={{ color: '#AF66DF' }}>change</p>
-        </div>
-
-        <button className="flex items-center justify-center space-x-2 bg-[#03A21C] text-black px-6 py-3 rounded-full hover:bg-green-500 transition-colors duration-200">
-          <FontAwesomeIcon icon={faWhatsapp} size='lg' color='white'/>
-          <span className='text-white'>Join our Community</span>
-        </button>
+      <div className="w-full p-8">  
+        <About/>
       </div>
-      {/* <Events /> */}
-      <About />  
     </div>
   );
 }

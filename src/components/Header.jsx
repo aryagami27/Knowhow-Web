@@ -55,7 +55,7 @@ function Header() {
       {location.pathname !== '/' && (
           <div className="absolute right-4 top-0"> {/* Container for the button */}
             <Link to="/join" className="flex items-center bg-green-600 text-white rounded-full px-6 h-[60px] hover:bg-green-500 transition-colors duration-200">
-              <FontAwesomeIcon icon={faWhatsapp} className="xl:mr-2 size-6" /> {/* WhatsApp Icon */}
+              <FontAwesomeIcon icon={faWhatsapp} className="xl:mr-2 size-5" /> {/* WhatsApp Icon */}
               <p className="hidden xl:block">Join our Community</p>
             </Link>
           </div>
