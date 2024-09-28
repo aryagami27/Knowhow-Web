@@ -68,7 +68,7 @@ function Domains() {
       title: 'IOT',
       image: 'iot.jpg',
       content: 'Understand the principles of AI and how to implement intelligent systems.',
-      extraInfo: 'The Internet of Things (IoT) connects devices to the internet, enabling data exchange. Learn about IoT architecture and application development.'
+      extraInfo: "At KnowHow, we believe IoT is not just about connecting devices—it's about connecting possibilities. Our IoT community is designed for innovators, problem-solvers, and creators who are passionate about leveraging technology to transform how we live and work. Innovation thrives in a community where knowledge flows freely. At KnowHow, we’re not just focused on current trends—we are fostering the future of IoT by encouraging a spirit of curiosity, experimentation, and collaboration."
     },
     {
       id: 10,
@@ -77,7 +77,7 @@ function Domains() {
       content: 'Understand the principles of AI and how to implement intelligent systems.',
       extraInfo: 'Cloud computing provides on-demand computing resources. Learn about cloud service models, deployment strategies, and data management.'
     },
-    // Add extraInfo to other cards...
+    
   ];
 
   const handleOpenModal = (card) => {
@@ -93,7 +93,7 @@ function Domains() {
   return (
     <div 
       className="min-h-screen flex flex-col items-center justify-center px-10 py-32" 
-      style={{ background: 'linear-gradient(to bottom, #17173A 14%, #13131C 25%)' }}
+      // style={{ background: 'linear-gradient(to top, #17173A 14%, #13131C 25%)' }}
     >
       <Modal 
         isOpen={modalOpen} 
@@ -113,7 +113,7 @@ function Domains() {
         </p>
 
         {/* Simple Grid Layout */}
-        <div className="flex flex-wrap w-full gap-4 justify-center">
+        <div className="flex flex-wrap w-full gap-2 justify-center">
           {cards.map((card) => (
             <div key={card.id} className="">
               <DomainCard

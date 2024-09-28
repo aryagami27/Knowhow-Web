@@ -8,11 +8,14 @@ function About() {
     <div>
       <Events />
       <div className="col-span-2 mt-12">
-        <h2 className="text-4xl font-bold text-white">
+        <h2 className="text-4xl font-bold text-white text-center mb-4">
           About <span className="text-[#AF66DF]">KnowHow</span>
         </h2>
+        <p className="text-center text-lg text-gray-300 mb-12">
+          Learn about the mission and the journey of our community
+        </p>
       </div>
-      <div className="mt-8 flex justify-center items-center">
+      <div className="flex justify-center items-center px-10">
         <div className="grid grid-rows-4 grid-cols-6 gap-2">
           <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-4 row-span-1 p-5">
             <p className='font-bold text-2xl'>The Spark</p>

@@ -5,12 +5,13 @@ import About from './About';
 import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import MarqueeCards from '../components/MarqueeCards';
+import Domains from './Domains';
 
 function Hero() {
   return (
     <div className="flex flex-col bg-[#13131C]">
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
-        <p className='font-bold mt-40 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
+        <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
         <p className='font-bold md:text-7xl text-center text-5xl'>The catalyst for </p>
         <p className='font-bold md:text-7xl text-5xl text-center text-[#AF66DF]'>change</p>
         <div className="mt-8">
@@ -36,6 +37,9 @@ function Hero() {
       </div>
       <div className="w-full p-8">  
         <About/>
+      </div>
+      <div className="w-full">  
+        <Domains/>
       </div>
     </div>
   );

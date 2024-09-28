@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faTwitter, faInstagram, faWhatsapp, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Link } from 'react-router-dom';
 
 function Footer() {
@@ -11,7 +11,7 @@ function Footer() {
           <div>
             <img src='./logo2.png' className='w-[300px] sm:w-full' />
             <p className="text-gray-400">
-            Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
+              Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
             </p>
           </div>
           <div>
@@ -27,16 +27,6 @@ function Footer() {
                   Domains
                 </Link>
               </li>
-              <li>
-                <Link to="/team" className="hover:text-gray-400 transition-colors">
-                  Meet our Team
-                </Link>
-              </li>
-              <li>
-                <Link to="/events" className="hover:text-gray-400 transition-colors">
-                  Events
-                </Link>
-              </li>
             </ul>
           </div>
           <div>
@@ -50,14 +40,21 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-6">
-              <a href="https://facebook.com" className="hover:text-gray-400">
-                <FontAwesomeIcon icon={faFacebook} size="2x" />
+              <a href="https://" className="hover:text-gray-400">
+                <FontAwesomeIcon icon={faLinkedin} size="2x" />
               </a>
-              <a href="https://twitter.com" className="hover:text-gray-400">
+              <a href="https://" className="hover:text-gray-400">
                 <FontAwesomeIcon icon={faTwitter} size="2x" />
               </a>
-              <a href="https://instagram.com" className="hover:text-gray-400">
+              <a href="https://" className="hover:text-gray-400">
                 <FontAwesomeIcon icon={faInstagram} size="2x" />
+              </a>
+            </div>
+            <div className="mt-6">
+              <h3 className="text-lg font-semibold mb-4">Join Our Community</h3>
+              <a href="https://" className="flex items-center border-2 border-green-600 text-green-600 rounded-full px-3 py-2 text-sm hover:border-white hover:text-white transition-colors duration-200 w-44">
+                <FontAwesomeIcon icon={faWhatsapp} size="lg" className="mr-2" />
+                <span className='text-xs'>Join Us on WhatsApp</span>
               </a>
             </div>
           </div>
