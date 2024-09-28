@@ -11,7 +11,7 @@ function Hero() {
   return (
     <div className="flex flex-col bg-[#13131C] relative">
       <div className="absolute top-2 left-4">
-        <img src='./logo2.png' className='h-14' />
+        <img src='./logo2.webp' className='h-14' />
       </div>
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
         <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
@@ -35,16 +35,16 @@ function Hero() {
         </div>
         <div className="my-10">
           <Marquee className='w-full md:h-80 h-40'>
-            <MarqueeCards image='./ai.jpg'/>
-            <MarqueeCards image='./appdev.jpg'/>
-            <MarqueeCards image="./arvr.jpg"/>
-            <MarqueeCards image='./bitcon.jpg'/>
-            <MarqueeCards image='./cloud.jpg'/>
-            <MarqueeCards image='./cybersec.jpg'/>
-            <MarqueeCards image='datascience.jpg'/>
-            <MarqueeCards image='iot.jpg'/>
-            <MarqueeCards image='uiux.jpg'/>
-            <MarqueeCards image='webdev.jpg'/>
+            <MarqueeCards image='./ai.webp'/>
+            <MarqueeCards image='./appdev.webp'/>
+            <MarqueeCards image="./arvr.webp"/>
+            <MarqueeCards image='./bitcon.webp'/>
+            <MarqueeCards image='./cloud.webp'/>
+            <MarqueeCards image='./cybersec.webp'/>
+            <MarqueeCards image='datascience.webp'/>
+            <MarqueeCards image='iot.webp'/>
+            <MarqueeCards image='uiux.webp'/>
+            <MarqueeCards image='webdev.webp'/>
           </Marquee>
         </div>
       </div>

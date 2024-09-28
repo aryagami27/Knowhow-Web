@@ -7,7 +7,7 @@ function Footer() {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <img src='./logo2.png' className='w-[300px] sm:w-full' />
+            <img src='./logo2.webp' className='w-[300px]' />
             <p className="text-gray-400">
               Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
             </p>

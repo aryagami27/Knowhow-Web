@@ -24,7 +24,7 @@ function About() {
           </div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center aspect-[2/1]">Animation Maybe</div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-2 col-span-2 aspect-square">
-            <img src='./ai.jpg' className='w-full h-full object-cover rounded-2xl' />
+            <img src='./ai.webp' className='w-full h-full object-cover rounded-2xl' />
           </div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-2 col-span-2 p-5 aspect-square">
             <p className='font-bold text-2xl'>Unlock Your Potential with KnowHow</p>
@@ -35,11 +35,11 @@ function About() {
             <p className='text-lg mt-1'>Like a path winding through uncharted territory, we guide the seekers—the innovators, the problem solvers—on their quest for answers. With each step, new doors open, leading to discovery, growth, and mastery.</p>
           </div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1 aspect-square">
-            <img src='./appdev.jpg' className='w-full h-full object-cover rounded-2xl' />
+            <img src='./appdev.webp' className='w-full h-full object-cover rounded-2xl' />
           </div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">Animation Maybe</div>
           <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1 aspect-square">
-            <img src='./appdev.jpg' className='w-full h-full object-cover rounded-2xl' />
+            <img src='./appdev.webp' className='w-full h-full object-cover rounded-2xl' />
           </div>
         </div>
         </div>
