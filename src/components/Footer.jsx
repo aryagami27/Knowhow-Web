@@ -11,7 +11,7 @@ function Footer() {
           {/* Branding */}
           <div>
             {/* <h3 className="text-xl font-bold mb-4">LOGO</h3> */}
-            <img src='./logo2.png' />
+            <img src='./logo2.png' className='w-[300px] sm:w-full' />
             <p className="text-gray-400">
             Empowering your technical growth. Providing a platform to all tech-enthusiasts out there.
             </p>
