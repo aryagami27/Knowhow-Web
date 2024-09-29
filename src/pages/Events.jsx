@@ -1,7 +1,7 @@
 function Events() {
   return (
     <div className="mt-20 mb-24">
-      <h1 className="sm:text-4xl text-2xl font-bold">
+      <h1 className="sm:text-4xl text-3xl font-bold">
         Upcoming <span style={{ color: '#AF66DF' }}>Events</span>
       </h1>
       <div className="sm:mt-8 mt-4 w-full flex flex-wrap gap-4">

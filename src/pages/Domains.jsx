@@ -103,7 +103,7 @@ function Domains() {
       />
 
       <div className="relative w-full mx-6">
-        <h1 className="text-center sm:text-4xl text-2xl font-bold text-white sm:mb-4">
+        <h1 className="text-center sm:text-4xl text-3xl font-bold text-white sm:mb-4">
           The <span style={{ color: '#AF66DF' }}>KnowHow</span> Domains
         </h1>
         <p className="text-center sm:text-lg text-gray-300 mb-12">

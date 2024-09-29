@@ -5,7 +5,7 @@ function About() {
     <div>
       <Events />
       <div className="col-span-2 mt-12">
-        <h2 className="sm:text-4xl text-2xl font-bold text-white text-center sm:mb-4">
+        <h2 className="sm:text-4xl text-3xl font-bold text-white text-center sm:mb-4">
           About <span className="text-[#AF66DF]">KnowHow</span>
         </h2>
         <p className="text-center sm:text-lg text-gray-300 mb-12">
