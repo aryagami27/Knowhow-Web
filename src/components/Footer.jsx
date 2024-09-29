@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faTwitter, faInstagram, faWhatsapp, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram, faWhatsapp, faLinkedin,faXTwitter } from '@fortawesome/free-brands-svg-icons';
 
 function Footer() {
   return (
@@ -42,7 +42,7 @@ function Footer() {
                 <FontAwesomeIcon icon={faLinkedin} size="2x" />
               </a>
               <a href="https://" className="hover:text-gray-400">
-                <FontAwesomeIcon icon={faTwitter} size="2x" />
+                <FontAwesomeIcon icon={faXTwitter} size="2x" />
               </a>
               <a href="https://" className="hover:text-gray-400">
                 <FontAwesomeIcon icon={faInstagram} size="2x" />
