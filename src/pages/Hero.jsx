@@ -14,9 +14,9 @@ function Hero() {
         <img src='./logo2.webp' className='sm:h-14 h-10' />
       </div>
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
-        <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
-        <p className='font-bold md:text-7xl text-center text-5xl'>The catalyst for </p>
-        <div className='font-bold md:text-7xl text-5xl text-center text-[#AF66DF]'>
+        <p className='font-bold mt-24 md:text-7xl text-4xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>
+        <p className='font-bold md:text-7xl text-center text-4xl'>The catalyst for </p>
+        <div className='font-bold md:text-7xl text-4xl text-center text-[#AF66DF]'>
           <Typewriter
             words={['Change', 'Growth', 'Ambition', 'Innovation']}
             loop={true}
