@@ -11,7 +11,7 @@ function Hero() {
   return (
     <div className="flex flex-col bg-[#13131C] relative">
       <div className="absolute top-2 left-4">
-        <img src='./logo2.webp' className='h-14' />
+        <img src='./logo2.webp' className='sm:h-14 h-10' />
       </div>
       <div className="w-full bg-gradient-to-b from-[#17173A] from-14% to-[#13131C]">
         <p className='font-bold mt-24 md:text-7xl text-5xl text-center'>Know<span className='text-[#3954DF]'>How</span>:</p>

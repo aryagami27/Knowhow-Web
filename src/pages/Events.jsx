@@ -4,8 +4,8 @@ function Events() {
       <h1 className="text-4xl font-bold">
         Upcoming <span style={{ color: '#AF66DF' }}>Events</span>
       </h1>
-      <div className="mt-8 w-full flex flex-row space-x-6">
-        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full flex-row">
+      <div className="mt-8 w-full flex flex-wrap gap-4">
+        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full flex-row max-w-[500px]">
           <div>
             <h2 className="text-xl font-bold text-white">Event Title</h2>
             <p className="text-gray-400">October 10th - October 12th, 2024</p>
@@ -14,7 +14,7 @@ function Events() {
             Enroll Now
           </button>
         </div>
-        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full">
+        <div className="flex justify-between items-center p-6 bg-[rgba(43,43,51,0.7)] rounded-lg shadow-md w-full max-w-[500px]">
           <div>
             <h2 className="text-xl font-bold text-white">Another Event</h2>
             <p className="text-gray-400">November 15th - November 17th, 2024</p>
