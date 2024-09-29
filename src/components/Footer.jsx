@@ -30,21 +30,21 @@ function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <ul className="space-y-2">
-              <li>knowhow@gmail.com</li>
-              <li>+91 98283 83281</li>
-              <li>K J Somaiya Institute of Technology, Sion</li>
+              <a href='mailto:knowhow@gmail.com' className='block' >knowhow@gmail.com</a>
+              <a href='tel:+919828383281'className='block'>+91 98283 83281</a>
+              <a href='https://maps.app.goo.gl/TNBA5N6hhFUP5oEp9' target='_blank' className='block'>K J Somaiya Institute of Technology, Sion</a>
             </ul>
           </div>
           <div>
             <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-6">
-              <a href="https://" className="hover:text-gray-400">
+              <a href="https://www.linkedin.com/company/knowhow-kjsit/" className="hover:text-gray-400" target='_blank'>
                 <FontAwesomeIcon icon={faLinkedin} size="2x" />
               </a>
-              <a href="https://" className="hover:text-gray-400">
+              <a href="https://x.com/knowhow_comm" className="hover:text-gray-400" target='_blank'>
                 <FontAwesomeIcon icon={faXTwitter} size="2x" />
               </a>
-              <a href="https://" className="hover:text-gray-400">
+              <a href="https://www.instagram.com/knowhow_tech/" className="hover:text-gray-400" target='_blank'>
                 <FontAwesomeIcon icon={faInstagram} size="2x" />
               </a>
             </div>
