@@ -48,7 +48,7 @@ function Hero() {
           </Marquee>
         </div>
       </div>
-      <div className="w-full p-8">  
+      <div className="w-full p-4">  
         <About/>
       </div>
       <div className="w-full">  

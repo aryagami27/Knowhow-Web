@@ -29,10 +29,10 @@ function Footer() {
           </div> */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
-            <ul className="space-y-2">
-              <a href='mailto:knowhow@gmail.com' className='block' >knowhow@gmail.com</a>
-              <a href='tel:+919828383281'className='block'>+91 98283 83281</a>
-              <a href='https://maps.app.goo.gl/TNBA5N6hhFUP5oEp9' target='_blank' className='block'>K J Somaiya Institute of Technology, Sion</a>
+            <ul className="flex flex-col gap-2">
+              <a href='mailto:knowhow@gmail.com' className='hover:underline' >knowhow@gmail.com</a>
+              <a href='tel:+919828383281'className='hover:underline'>+91 98283 83281</a>
+              <a href='https://maps.app.goo.gl/TNBA5N6hhFUP5oEp9' target='_blank' className='hover:underline'>K J Somaiya Institute of Technology, Sion</a>
             </ul>
           </div>
           <div>
