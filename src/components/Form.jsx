@@ -1,11 +1,36 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const RSVPForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [slot, setSlot] = useState('');
   const [error, setError] = useState('');
+  const [slotsFull, setSlotsFull] = useState(false);
+  const [slotData, setSlotData] = useState({ slot1: 0, slot2: 0 });
+  const [showDialog, setShowDialog] = useState(false);
+
+  const navigate = useNavigate(); 
+
+  useEffect(() => {
+    const fetchSlotCounts = async () => {
+      const slotDocRef = doc(db, 'slots', 'slotCounts');
+      const slotDocSnap = await getDoc(slotDocRef);
+
+      if (slotDocSnap.exists()) {
+        const data = slotDocSnap.data();
+        setSlotData(data);
+
+        if (data.slot1 >= 50 && data.slot2 >= 50) {
+          setSlotsFull(true);
+        }
+      }
+    };
+
+    fetchSlotCounts();
+  }, []);
 
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@somaiya\.edu$/;
@@ -29,24 +54,38 @@ const RSVPForm = () => {
       if (slotDocSnap.exists()) {
         const slotData = slotDocSnap.data();
         let selectedSlot = '';
+        let slotCollectionRef = null;
 
         // Check if the chosen slot is available (less than 50)
         if (slot === '10:30am-1:30pm' && slotData.slot1 < 50) {
-          selectedSlot = 'slot1RSVPs';
+          selectedSlot = 'slot1RSVPS';
           // Update the slot count
           await updateDoc(slotDocRef, { slot1: slotData.slot1 + 1 });
+          // Reference the subcollection for slot1
+          slotCollectionRef = collection(doc(db, 'slots', 'RSVP'), 'slot1RSVPS');
         } else if (slot === '2pm-5pm' && slotData.slot2 < 50) {
-          selectedSlot = 'slot2RSVPs';
+          selectedSlot = 'slot2RSVPS';
           // Update the slot count
           await updateDoc(slotDocRef, { slot2: slotData.slot2 + 1 });
+          // Reference the subcollection for slot2
+          slotCollectionRef = collection(doc(db, 'slots', 'RSVP'), 'slot2RSVPS');
         } else {
           setError('This slot is full. Please choose another one.');
           return;
         }
 
+        // Log selected slot for debugging
+        console.log('Selected slot:', selectedSlot);
+
+        // Log the collection path and the data to be stored
+        console.log('Adding RSVP to:', `slots/RSVP/${selectedSlot}`);
+        console.log('RSVP Data:', { name, email, slot });
+
         // Add RSVP data to the specific slot collection
-        await addDoc(collection(db, 'slots', selectedSlot), { name, email });
-        alert('RSVP submitted! You will receive an email with details.');
+        await addDoc(slotCollectionRef, { name, email, slot });
+        // alert('RSVP submitted! You will receive an email with details.');
+
+        setShowDialog(true);
 
       } else {
         console.error('No slot data found!');
@@ -57,6 +96,11 @@ const RSVPForm = () => {
     }
   };
 
+  const handleCloseDialog = () => {
+    setShowDialog(false);
+    navigate('/'); // Navigate to home on close
+  };
+
   const isFormValid = name && email && slot && validateEmail(email);
 
   return (
@@ -65,45 +109,66 @@ const RSVPForm = () => {
         <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-b from-purple-500 to-purple-100 bg-clip-text text-transparent">
           RSVP Form
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <input
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-          />
-          <input
-            type="email"
-            placeholder="Email (@somaiya.edu)"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-          />
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          <select
-            value={slot}
-            onChange={(e) => setSlot(e.target.value)}
-            required
-            className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-          >
-            <option value="" className="text-black">Select a time slot</option>
-            <option value="10:30am-1:30pm" className='text-gray-700'>10:30 am to 01:30 pm</option>
-            <option value="2pm-5pm" className='text-gray-700'>02:00 pm to 05:00 pm</option>
-          </select>
-          <button
-            type="submit"
-            disabled={!isFormValid}
-            className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-              isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
-            }`}
-          >
-            RSVP
-          </button>
-        </form>
+        {slotsFull ? (
+          <p className="text-red-500 text-center">All slots are full. The form is now closed.</p>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <input
+              type="text"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+            />
+            <input
+              type="email"
+              placeholder="Email (@somaiya.edu)"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+            />
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+            <select
+              value={slot}
+              onChange={(e) => setSlot(e.target.value)}
+              required
+              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+            >
+              <option value="" className="text-black">Select a time slot</option>
+              <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 50}>10:30 am to 01:30 pm</option>
+              <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 50}>02:00 pm to 05:00 pm</option>
+            </select>
+            <button
+              type="submit"
+              disabled={!isFormValid}
+              // onClick={showDialog}
+              className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
+                isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
+              }`}
+            >
+              RSVP
+            </button>
+          </form>
+        )}
       </div>
+
+      {/* Dialog Box */}
+      {showDialog && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-[#17173A] rounded-lg p-6 w-80 shadow-lg text-center">
+            <h3 className="text-lg font-semibold">Thank you for registering!</h3>
+            <p className='text-sm'>You will be receiving your e-ticket shortly.</p>
+            <button
+              onClick={handleCloseDialog}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500"
+            >
+              Continue to Home
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

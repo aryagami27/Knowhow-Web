@@ -16,6 +16,7 @@ const router = createBrowserRouter(
         <Route path='' element ={<Home/>}/>
         <Route path='domains' element={<Domains />}/>
         <Route path='team' element={<Members />}/>
+        <Route path='form' element={<RSVPForm />}/>
       </Route>
     ]
   )
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 <React.StrictMode>
-  <RouterProvider router={router}/>
+  <RouterProvider router={router}/> 
   {/* <RSVPForm /> */}
 </React.StrictMode>
 )
