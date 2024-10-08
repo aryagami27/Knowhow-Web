@@ -74,17 +74,7 @@ const RSVPForm = () => {
           return;
         }
 
-        // Log selected slot for debugging
-        console.log('Selected slot:', selectedSlot);
-
-        // Log the collection path and the data to be stored
-        console.log('Adding RSVP to:', `slots/RSVP/${selectedSlot}`);
-        console.log('RSVP Data:', { name, email, slot });
-
-        // Add RSVP data to the specific slot collection
         await addDoc(slotCollectionRef, { name, email, slot });
-        // alert('RSVP submitted! You will receive an email with details.');
-
         setShowDialog(true);
 
       } else {
@@ -105,53 +95,67 @@ const RSVPForm = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#17173A] to-[#13131C] p-6">
-      <div className="bg-[#13131C] shadow-lg rounded-lg p-8 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-b from-purple-500 to-purple-100 bg-clip-text text-transparent">
-          RSVP Form
-        </h2>
-        {slotsFull ? (
-          <p className="text-red-500 text-center">All slots are full. The form is now closed.</p>
-        ) : (
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-            />
-            <input
-              type="email"
-              placeholder="Email (@somaiya.edu)"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-            />
-            {error && <p className="text-red-500 text-sm">{error}</p>}
-            <select
-              value={slot}
-              onChange={(e) => setSlot(e.target.value)}
-              required
-              className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
-            >
-              <option value="" className="text-black">Select a time slot</option>
-              <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 50}>10:30 am to 01:30 pm</option>
-              <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 50}>02:00 pm to 05:00 pm</option>
-            </select>
-            <button
-              type="submit"
-              disabled={!isFormValid}
-              // onClick={showDialog}
-              className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-                isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
-              }`}
-            >
-              RSVP
-            </button>
-          </form>
-        )}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-5xl">
+        {/* RSVP Form */}
+        <div className="bg-[#13131C] shadow-lg rounded-lg p-8">
+          <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-b from-purple-500 to-purple-100 bg-clip-text text-transparent">
+            RSVP Form
+          </h2>
+          {slotsFull ? (
+            <p className="text-red-500 text-center">All slots are full. The form is now closed.</p>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <input
+                type="text"
+                placeholder="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+              />
+              <input
+                type="email"
+                placeholder="Email (@somaiya.edu)"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+              />
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              <select
+                value={slot}
+                onChange={(e) => setSlot(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+              >
+                <option value="" className="text-black">Select a time slot</option>
+                <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 50}>10:30 am to 01:30 pm</option>
+                <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 50}>02:00 pm to 05:00 pm</option>
+              </select>
+              <button
+                type="submit"
+                disabled={!isFormValid}
+                className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
+                  isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
+                }`}
+              >
+                RSVP
+              </button>
+            </form>
+          )}
+        </div>
+
+        {/* RSVP Rules */}
+        <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1">
+          <h3 className="text-2xl font-bold">RSVP Protocol:</h3>
+          <ul className="list-disc list-inside space-y-2">
+            <li>Rule 1: Lorem ipsum dolor sit amet.</li>
+            <li>Rule 2: Consectetur adipiscing elit.</li>
+            <li>Rule 3: Nulla vehicula quam vel mi.</li>
+            <li>Rule 4: Pellentesque euismod nisi sit amet.</li>
+            <li>Rule 5: Ut tristique nunc eu mi auctor.</li>
+          </ul>
+        </div>
       </div>
 
       {/* Dialog Box */}
