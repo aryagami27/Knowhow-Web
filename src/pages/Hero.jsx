@@ -30,7 +30,8 @@ function Hero() {
         <div className="mt-8">
           <Link className="mx-auto flex items-center justify-center sm:max-w-56 max-w-44 bg-green-700 text-white rounded-full sm:h-[60px] h-[36px] hover:bg-green-600 shadow-[#ffffff4f] shadow-inner transition-colors duration-200">
             <FontAwesomeIcon icon={faWhatsapp} className="mr-2 sm:size-6 h-4" />
-            <p className='sm:text-base text-sm'>Join our Community</p>
+           <Link to='/form'>
+           <p className='sm:text-base text-sm'>Join our Community</p></Link>
           </Link>
         </div>
         <div className="my-10">
