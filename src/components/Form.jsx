@@ -7,12 +7,13 @@ const RSVPForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [slot, setSlot] = useState('');
+  const [year, setYear] = useState('');
   const [error, setError] = useState('');
   const [slotsFull, setSlotsFull] = useState(false);
   const [slotData, setSlotData] = useState({ slot1: 0, slot2: 0 });
   const [showDialog, setShowDialog] = useState(false);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSlotCounts = async () => {
@@ -39,14 +40,14 @@ const RSVPForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateEmail(email)) {
       setError('Email must be @somaiya.edu');
       return;
     }
 
     setError('');
-    
+
     try {
       const slotDocRef = doc(db, 'slots', 'slotCounts');
       const slotDocSnap = await getDoc(slotDocRef);
@@ -74,7 +75,7 @@ const RSVPForm = () => {
           return;
         }
 
-        await addDoc(slotCollectionRef, { name, email, slot });
+        await addDoc(slotCollectionRef, { name, year, email, slot });
         setShowDialog(true);
 
       } else {
@@ -113,6 +114,19 @@ const RSVPForm = () => {
                 required
                 className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
               />
+
+              <select
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
+              >
+                <option value="" className="text-black">Select your year</option>
+                <option value="FY" className='text-gray-700'>FY</option>
+                <option value="SY" className='text-gray-700'>SY</option>
+                <option value="TY" className='text-gray-700'>TY</option>
+              </select>
+
               <input
                 type="email"
                 placeholder="Email (@somaiya.edu)"
@@ -132,12 +146,14 @@ const RSVPForm = () => {
                 <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 48}>10:30 am to 01:30 pm</option>
                 <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 48}>02:00 pm to 05:00 pm</option>
               </select>
+
+
+
               <button
                 type="submit"
                 disabled={!isFormValid}
-                className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-                  isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
-                }`}
+                className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${isFormValid ? 'bg-green-700 hover:bg-green-600 text-white' : 'bg-gray-500 cursor-not-allowed'
+                  }`}
               >
                 RSVP
               </button>
