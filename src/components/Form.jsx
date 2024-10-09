@@ -129,8 +129,8 @@ const RSVPForm = () => {
                 className="w-full px-4 py-2 border border-gray-700 bg-transparent rounded-md text-white focus:outline-none focus:ring-2 focus:ring-[#3954DF]"
               >
                 <option value="" className="text-black">Select a time slot</option>
-                <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 50}>10:30 am to 01:30 pm</option>
-                <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 50}>02:00 pm to 05:00 pm</option>
+                <option value="10:30am-1:30pm" className='text-gray-700' disabled={slotData.slot1 >= 48}>10:30 am to 01:30 pm</option>
+                <option value="2pm-5pm" className='text-gray-700' disabled={slotData.slot2 >= 48}>02:00 pm to 05:00 pm</option>
               </select>
               <button
                 type="submit"
@@ -147,13 +147,12 @@ const RSVPForm = () => {
 
         {/* RSVP Rules */}
         <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1">
-          <h3 className="text-2xl font-bold">RSVP Protocol:</h3>
-          <ul className="list-disc list-inside space-y-2">
-            <li>Rule 1: Lorem ipsum dolor sit amet.</li>
-            <li>Rule 2: Consectetur adipiscing elit.</li>
-            <li>Rule 3: Nulla vehicula quam vel mi.</li>
-            <li>Rule 4: Pellentesque euismod nisi sit amet.</li>
-            <li>Rule 5: Ut tristique nunc eu mi auctor.</li>
+          <h3 className="text-2xl font-bold">Registration Details</h3>
+          <ul className="list-disc list-inside space-y-2 ">
+            <li>The link will be active until 96 users have registered</li>
+            <li>You will be sent an e-ticket a while after your registration</li>
+            <li>You will need to show your e-ticket to get admitted to the event.</li>
+            <li>Please maintain discipline during your admission to the event.</li>
           </ul>
         </div>
       </div>

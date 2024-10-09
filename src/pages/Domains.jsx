@@ -11,71 +11,79 @@ function Domains() {
       id: 1,
       title: 'UI/UX',
       image: './uiux.webp',
-      content: 'Learn how to build responsive and dynamic websites using HTML, CSS, and JavaScript.',
-      extraInfo: 'At KnowHow, we see UI/UX design as the bridge between technology and people. Our community is dedicated to helping designers create seamless, enjoyable, and impactful experiences. Whether you’re interested in wireframing, prototyping, user research, or visual design, KnowHow provides the resources and collaborative space to hone your skills. We believe great design is not just about aesthetics—it’s about empathy, understanding the user’s journey, and creating solutions that truly resonate with them. At KnowHow, UI/UX is more than a skill set—it’s a mindset. A mindset of constant curiosity, learning, and creating designs that make a difference in people’s lives.'
+      content: 'UI/UX is the bridge between technology and human interaction, shaping how users perceive and engage with you product.',
+
+      extraInfo: "At KnowHow, we believe that exceptional design is more than just skin deep. It's about empathy, understanding user needs, and crafting solutions that truly resonate. Our collaborative environment fosters creativity and dedication, ensuring that every project we undertake is driven by a passion for excellence."
     },
     {
       id: 2,
       title: 'Artificial Intelligence & Machine Learning',
       image: './ai.webp',
-      content: 'Explore the world of mobile applications and develop apps for Android and iOS.',
-      extraInfo: 'AI and ML are revolutionizing technology. Learn about algorithms, data processing, and how to implement machine learning models.'
+      content: 'AI/ML is where machines learn, think and start to understand the ways of our world in way we never though would be possible.',
+      
+      extraInfo: "At KnowHow, we're passionate about making AI/ML accessible to everyone. We believe that anyone with a curious mind and a desire to learn can harness the power of AI/ML to create groundbreaking solutions.Join us as we explore the endless possibilities of AI/ML and build a brighter future together."
     },
     {
       id: 3,
       title: 'Web Development',
       image: './webdev.webp',
-      content: 'Dive into data analysis and machine learning to make data-driven decisions.',
-      extraInfo: 'At KnowHow, we believe Web and App Development is not just about writing code—it’s about building experiences. Our community fosters a culture of creativity and innovation, where developers of all levels come together to build solutions that are as functional as they are beautiful. At KnowHow, we don’t just focus on learning the latest frameworks or languages; we emphasize the why behind development. We nurture an environment where web and app development isn’t limited to frontend and backend—it intersects with other domains like UX/UI design, cybersecurity, IoT, and AI.'
+      content: "Web Development is the beating heart of our digital economy. It's transformed how we think, create, and connect, shaping the way businesses interact with their audiences",
+
+      extraInfo: "At KnowHow, we're passionate about empowering those with the drive to create. Web development offers a unique and exciting opportunity to explore creativity and craft stunning, responsive websites. Our community is a place where developers of all levels can come together to share ideas, learn from each other, and build solutions that are both functional and visually appealing."
     },
     {
       id: 4,
       title: 'App Development',
       image: './appdev.webp',
-      content: 'Dive into data analysis and machine learning to make data-driven decisions.',
-      extraInfo: 'App development focuses on creating software applications for mobile devices. Understand app design, development, and deployment.'
+      content: "App development is the digital frontier where innovation meets reality, it's more than just designing.A truly exceptional app is a testament to the developer's creativity, passion, and unwavering dedication.",
+      
+      extraInfo: "At KnowHow, we recognize the importance of resiliency, hard work, and the relentless pursuit of excellence. We're committed to providing a platform where developers can thrive, connect with like-minded individuals, and bring their visionary ideas to life. Together, let's build something extraordinary."
     },
     {
       id: 5,
       title: 'Blockchain',
       image: './bitcon.webp',
-      content: 'Understand the principles of AI and how to implement intelligent systems.',
-      extraInfo: 'Blockchain technology is a decentralized ledger system that enhances security and transparency. Learn about smart contracts and cryptocurrencies.'
+      content: "Blockchain is a revolutionary technology that is transforming the way we interact with each other and conduct business. It's a decentralized, distributed ledger system that records transactions securely and transparently across a network of computers.",
+
+      extraInfo: "At KnowHow, we believe blockchain has the potential to revolutionize industries and create a more equitable and efficient world. We're committed to empowering individuals and businesses to leverage blockchain technology to solve real-world problems and drive innovation. Our community is a hub for blockchain enthusiasts, developers, and entrepreneurs to connect, collaborate, and learn together."
     },
     {
       id: 6,
       title: 'Cybersecurity',
       image: './cybersec.webp',
-      content: 'Learn how to build responsive and dynamic websites using HTML, CSS, and JavaScript.',
-      extraInfo: 'At KnowHow, we view cybersecurity as a crucial pillar of digital innovation. Our cybersecurity community is a space where learners, professionals, and experts come together to explore cutting-edge techniques and strategies for defending against evolving cyber threats. Whether you’re passionate about ethical hacking, cryptography, network security, or building resilient systems, KnowHow offers the resources and collaboration opportunities to advance your skills.'
+      content: 'Cybersecurity is the shield protecting our data, infrastructure, and personal privacy from cyberattacks. As our lives become increasingly intertwined with technology, the need for strong security measures has never been more urgent. ',
+      extraInfo: "At KnowHow, we believe cybersecurity is essential for digital innovation. Our community is a hub for learners to explore the latest techniques and strategies to combat cyber threats. Whether you're interested in ethical hacking, cryptography, network security, or building resilient systems, we offer the resources and collaboration to help you excel."
     },
     {
       id: 7,
       title: 'Data Science & Analytics',
       image: './datascience.webp',
-      content: 'Explore the world of mobile applications and develop apps for Android and iOS.',
-      extraInfo: 'Data science combines statistical analysis and machine learning to extract insights from data. Learn data manipulation, visualization, and predictive modeling.'
+      content: "Data science and analysis are essential skills in today's data-driven world. By combining statistical techniques, machine learning algorithms, and domain expertise, data scientists can extract valuable insights from vast datasets.",
+
+      extraInfo: "At KnowHow, we believe data science and analysis are the keys to unlocking the full potential of data. We're committed to empowering data scientists and analysts to leverage their skills to solve complex problems and drive innovation. Our community is a gathering place for data enthusiasts, scientists, and analysts."
     },
     {
       id: 8,
       title: 'AR/VR',
       image: './arvr.webp',
-      content: 'Dive into data analysis and machine learning to make data-driven decisions.',
-      extraInfo: 'Augmented and Virtual Reality create immersive experiences. Learn how to develop applications that utilize AR and VR technologies.'
+      content: ' Augmented reality (AR) overlays digital information onto the real world, enhancing our perception and interaction, while virtual reality (VR) immerses us in entirely simulated environments.',
+
+      extraInfo: "We believe AR/VR has the power to transform industries and create new and exciting experiences. We're committed to empowering developers and creators to leverage AR/VR technology to build innovative applications and solutions. Our community is a haven for AR/VR enthusiasts, to transform future with their altered realities."
     },
     {
       id: 9,
       title: 'IOT',
       image: 'iot.webp',
-      content: 'Understand the principles of AI and how to implement intelligent systems.',
-      extraInfo: "At KnowHow, we believe IoT is not just about connecting devices—it's about connecting possibilities. Our IoT community is designed for innovators, problem-solvers, and creators who are passionate about leveraging technology to transform how we live and work. Innovation thrives in a community where knowledge flows freely. At KnowHow, we’re not just focused on current trends—we are fostering the future of IoT by encouraging a spirit of curiosity, experimentation, and collaboration."
+      content: "IoT is revolutionizing the way we interact with the world around us. It connects everyday objects to the internet, enabling them to collect, exchange, and analyze data.",
+
+      extraInfo: "At KnowHow, we believe IoT has the potential to improve our lives in countless ways. We're committed to empowering developers and businesses to leverage IoT technology to create innovative solutions. Our community is a meeting place for IoT enthusiasts, engineers, and data scientists."
     },
     {
       id: 10,
       title: 'Cloud Computing',
       image: './cloud.webp',
-      content: 'Understand the principles of AI and how to implement intelligent systems.',
-      extraInfo: 'Cloud computing provides on-demand computing resources. Learn about cloud service models, deployment strategies, and data management.'
+      content: 'Cloud computing provides on-demand computing resources. Learn about cloud service models, deployment strategies, and data management.',
+      extraInfo: "At KnowHow, we believe in the transformative power of cloud computing. It's a technology that empowers businesses and individuals to achieve more. Our community is a place where cloud enthusiasts can come together to learn, share knowledge, and build innovative solutions. Whether you're a seasoned cloud architect or just starting your journey, we're here to support your growth and help you unlock the full potential of the cloud"
     },
     
   ];

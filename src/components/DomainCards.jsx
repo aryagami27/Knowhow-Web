@@ -15,7 +15,7 @@ const DomainCard = ({ title, image, content, onReadMore }) => {
           <img src={image} alt={title} className="card-image" />
         </div>
         <div className="card-face card-back flex flex-col">
-          <div className="card-content">
+          <div className="card-content text-sm">
             <p>{content}</p>
           </div>
           <button 
