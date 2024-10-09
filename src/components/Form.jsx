@@ -22,6 +22,7 @@ const RSVPForm = () => {
   const [slotsFull, setSlotsFull] = useState(false);
   const [slotData, setSlotData] = useState({ slot1: 0, slot2: 0 });
   const [showDialog, setShowDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -118,7 +119,17 @@ const RSVPForm = () => {
 
     setError("");
 
+    setError("");
+    setLoading(true);
+
     try {
+      const isAlreadyRegistered = await checkIfRegistered(email);
+      if (isAlreadyRegistered) {
+        setError("You have already RSVP’d for this event.");
+        setLoading(false);
+        return;
+      }
+
       await runTransaction(db, async (transaction) => {
         const slotDocRef = doc(db, "slots", "slotCounts");
         const slotDocSnap = await transaction.get(slotDocRef);
@@ -188,6 +199,8 @@ const RSVPForm = () => {
     } catch (error) {
       console.error("Error adding document: ", error);
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -282,43 +295,59 @@ const RSVPForm = () => {
                 </select>
                 <button
                   type="submit"
-                  disabled={!isFormValid}
+                  disabled={!isFormValid || loading}
                   className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-                    isFormValid
+                    isFormValid && !loading
                       ? "bg-green-700 hover:bg-green-600 text-white"
                       : "bg-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  RSVP
+                  {loading ? (
+                    <svg
+                      className="animate-spin h-5 w-5 mx-auto text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                  ) : (
+                    "Submit"
+                  )}
                 </button>
               </form>
             )}
           </div>
-          <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold">Registration Details</h3>
-            <ul className="list-disc list-inside space-y-2 ">
-              <li>The link will be active until 96 users have registered</li>
-              <li>
-                You must register using your official Somaiya email address
-              </li>
-              <li>
-                If you cancel, your spot will be made available for others
-              </li>
-              <li>Each student can only RSVP once</li>
-            </ul>
-          </div>
         </div>
       </div>
+
       {showDialog && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 text-center shadow-lg">
-            <h3 className="text-2xl font-bold mb-4">RSVP Successful!</h3>
-            <p>You have successfully RSVP'd for the event.</p>
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center">
+          <div className="bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col">
+            <h3 className="text-xl font-semibold mb-4 flex justify-center">
+              RSVP Successful!
+            </h3>
+            <p className="mb-1 ">Your RSVP has been successfully submitted.</p>
+            <p className="mb-4 flex justify-center text-sm text-gray-400">
+              You will receive your e-ticket shortly!
+            </p>
             <button
-              className="mt-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
               onClick={handleCloseDialog}
+              className="px-6 py-2 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700"
             >
-              Close
+              Continue to Home
             </button>
           </div>
         </div>

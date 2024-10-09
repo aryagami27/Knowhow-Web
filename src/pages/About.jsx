@@ -38,7 +38,7 @@ function About() {
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1 aspect-square">
               <img src='./Meet2.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
-            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">Animation Maybe</div>
+            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center"><img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' /></div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1 aspect-square">
               <img src='./Princi.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
@@ -71,7 +71,7 @@ function About() {
               <p className='font-bold text-sm'>Unlock Your Potential with KnowHow</p>
               <p className='text-xs text-ellipsis'>At KnowHow, we provide the tools, resources, and community to turn your curiosity into action. Whether you're looking to learn, share, or innovate, KnowHow is where your next big idea begins</p>
             </div>
-            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">Animation Maybe</div>
+            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center"><img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' /></div>
           </div>
         </div>
       </div>
