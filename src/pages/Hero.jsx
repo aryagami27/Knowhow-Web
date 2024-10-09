@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import About from './About';
-import { Link } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 import MarqueeCards from '../components/MarqueeCards';
 import { Typewriter } from 'react-simple-typewriter';

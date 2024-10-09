@@ -36,11 +36,11 @@ function About() {
               </p>
             </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1 aspect-square">
-              <img src='./meetup.JPG' className='w-full h-full object-cover rounded-2xl' />
+              <img src='./Meet2.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">Animation Maybe</div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1 aspect-square">
-              <img src='./rickshare.jpg' className='w-full h-full object-cover rounded-2xl' />
+              <img src='./Princi.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
           </div>
         </div>
