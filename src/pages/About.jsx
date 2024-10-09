@@ -38,7 +38,9 @@ function About() {
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1 aspect-square">
               <img src='./Meet2.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
-            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center"><img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' /></div>
+            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">
+            <img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' />
+            </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1 aspect-square">
               <img src='./Princi.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
