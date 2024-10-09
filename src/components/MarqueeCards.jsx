@@ -6,7 +6,7 @@ function MarqueeCards({ image }) {
   return (
     <div className='md:w-[300px] w-[200px] h-[150px] rounded-3xl md:h-[200px] md:mx-4 mx-2 shadow-md shadow-black overflow-hidden'>
       {!loaded && (
-        <div className='skeleton-loader w-full h-full rounded-3xl bg-gradient-to-r from-[#1f1f2e] via-[#2a2a3d] to-[#1f1f2e] animate-marquee'></div>
+        <div className='absolute top-0 left-0 w-full h-full rounded-3xl bg-gradient-to-r from-gray-800 via-gray-900 to-gray-800 animate-marquee'></div>
       )}
       <img
         src={image}
