@@ -97,7 +97,7 @@ const RSVPForm = () => {
 
     try {
       if (slot === '10:30am-1:30pm') {
-        if (slot1Count <= 48) {
+        if (slot1Count <= 5) {
           const slot1CollectionRef = collection(db, 'slot1');
           await addDoc(slot1CollectionRef, {
             name: name,
@@ -111,7 +111,7 @@ const RSVPForm = () => {
           setError('This slot is full. Please choose another one.');
         }
       } else if (slot === '2pm-5pm') {
-        if (slot2Count <= 48) {
+        if (slot2Count <= 5) {
           const slot2CollectionRef = collection(db, 'slot2');
           await addDoc(slot2CollectionRef, {
             name: name,
