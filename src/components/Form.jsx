@@ -118,15 +118,9 @@ const RSVPForm = () => {
     }
 
     setError("");
+    setLoading(true);
 
     try {
-      const isAlreadyRegistered = await checkIfRegistered(email);
-      if (isAlreadyRegistered) {
-        setError("You have already RSVP’d for this event.");
-        setLoading(false);
-        return;
-      }
-
       await runTransaction(db, async (transaction) => {
         const slotDocRef = doc(db, "slots", "slotCounts");
         const slotDocSnap = await transaction.get(slotDocRef);
@@ -135,7 +129,7 @@ const RSVPForm = () => {
           transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
         }
 
-        const slotData = slotDocSnap.exists()
+        const currentSlotData = slotDocSnap.exists()
           ? slotDocSnap.data()
           : { slot1: 0, slot2: 0 };
 
@@ -160,7 +154,7 @@ const RSVPForm = () => {
         let rsvpCollectionRef = null;
 
         if (slot === "10:30am-1:30pm") {
-          if (slotData.slot1 >= 48) {
+          if (currentSlotData.slot1 >= 48) {
             throw new Error(
               "The 10:30 am - 01:30 pm slot is full. Please choose another one."
             );
@@ -168,7 +162,7 @@ const RSVPForm = () => {
           selectedSlot = "slot1";
           rsvpCollectionRef = slot1RSVPRef;
         } else if (slot === "2pm-5pm") {
-          if (slotData.slot2 >= 48) {
+          if (currentSlotData.slot2 >= 48) {
             throw new Error(
               "The 02:00 pm - 05:00 pm slot is full. Please choose another one."
             );
@@ -180,7 +174,7 @@ const RSVPForm = () => {
         }
 
         const updatedSlotData = {};
-        updatedSlotData[selectedSlot] = slotData[selectedSlot] + 1;
+        updatedSlotData[selectedSlot] = currentSlotData[selectedSlot] + 1;
         transaction.update(slotDocRef, updatedSlotData);
 
         const userRSVPRef = doc(rsvpCollectionRef, normalizedEmail);
@@ -192,7 +186,12 @@ const RSVPForm = () => {
           timestamp: new Date(),
         });
       });
+
       setShowDialog(true);
+      setName("");
+      setEmail("");
+      setYear("");
+      setSlot("");
     } catch (error) {
       console.error("Error adding document: ", error);
       setError(error.message);
