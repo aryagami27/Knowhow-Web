@@ -14,6 +14,7 @@ const RSVPForm = () => {
   const [slot2Count, setSlot2Count] = useState(0);
   const [slot1Data, setSlot1Data] = useState([]);
   const [slot2Data, setSlot2Data] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
   const navigate = useNavigate();
@@ -63,6 +64,16 @@ const RSVPForm = () => {
     return emailRegex.test(email);
   };
 
+  const checkIfRegistered = async (email) => {
+    const slot1RSVPRef = collection(db, 'slot1');
+    const slot2RSVPRef = collection(db, 'slot2');
+    const querySlot1 = query(slot1RSVPRef, where('email', '==', email));
+    const querySlot2 = query(slot2RSVPRef, where('email', '==', email));
+    const slot1Snapshot = await getDocs(querySlot1);
+    const slot2Snapshot = await getDocs(querySlot2);
+    return !slot1Snapshot.empty || !slot2Snapshot.empty;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
@@ -70,29 +81,38 @@ const RSVPForm = () => {
       return;
     }
     setError('');
+    setLoading(true);
+
+    const isRegistered = await checkIfRegistered(email);
+    if (isRegistered) {
+      setError('You are already registered with this email.');
+      return;
+    }
 
     try {
       if (slot === '10:30am-1:30pm') {
-        if (slot1Count < 48) {
+        if (slot1Count <= 48) {
           const slot1CollectionRef = collection(db, 'slot1');
           await addDoc(slot1CollectionRef, {
             name: name,
             email: email,
             year: year,
             slot: slot,
+            date: Date.now().toLocaleString(),
           });
           setShowDialog(true);
         } else {
           setError('This slot is full. Please choose another one.');
         }
       } else if (slot === '2pm-5pm') {
-        if (slot2Count < 48) {
+        if (slot2Count <= 48) {
           const slot2CollectionRef = collection(db, 'slot2');
           await addDoc(slot2CollectionRef, {
             name: name,
             email: email,
             year: year,
             slot: slot,
+            date: Date.now().toLocaleString(),
           });
           setShowDialog(true);
         } else {
@@ -102,6 +122,11 @@ const RSVPForm = () => {
     } catch (error) {
       console.error('Error adding document: ', error);
       setError(error.message);
+    } finally {
+      setName('');
+      setEmail('');
+      setYear('');
+      setLoading(false);
     }
   };
 
@@ -196,14 +221,37 @@ const RSVPForm = () => {
                 </select>
                 <button
                   type='submit'
-                  disabled={!isFormValid}
+                  disabled={!isFormValid || loading}
                   className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-                    isFormValid
+                    isFormValid && !loading
                       ? 'bg-green-700 hover:bg-green-600 text-white'
                       : 'bg-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  RSVP
+                  {loading ? (
+                    <svg
+                      className='animate-spin h-5 w-5 mx-auto text-white'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                    >
+                      <circle
+                        className='opacity-25'
+                        cx='12'
+                        cy='12'
+                        r='10'
+                        stroke='currentColor'
+                        strokeWidth='4'
+                      />
+                      <path
+                        className='opacity-75'
+                        fill='currentColor'
+                        d='M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z'
+                      />
+                    </svg>
+                  ) : (
+                    'Submit'
+                  )}
                 </button>
               </form>
             )}
@@ -224,15 +272,20 @@ const RSVPForm = () => {
         </div>
       </div>
       {showDialog && (
-        <div className='fixed inset-0 flex items-center justify-center z-50'>
-          <div className='bg-white rounded-lg p-6 text-center shadow-lg'>
-            <h3 className='text-2xl font-bold mb-4'>RSVP Successful!</h3>
-            <p>You have successfully RSVP'd for the event.</p>
+        <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center'>
+          <div className='bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col'>
+            <h3 className='text-xl font-semibold mb-4 flex justify-center'>
+              RSVP Successful!
+            </h3>
+            <p className='mb-1 '>Your RSVP has been successfully submitted.</p>
+            <p className='mb-4 flex justify-center text-sm text-gray-400'>
+              You will receive your e-ticket shortly!
+            </p>
             <button
-              className='mt-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600'
               onClick={handleCloseDialog}
+              className='px-6 py-2 bg-green-600 text-white font-bold rounded-lg shadow-md hover:bg-green-700'
             >
-              Close
+              Continue to Home
             </button>
           </div>
         </div>
