@@ -94,55 +94,41 @@ const RSVPForm = () => {
     setLoading(true);
 
     try {
-      const isRegistered = await checkIfRegistered(email);
-      if (isRegistered) {
-        setError('You are already registered with this email.');
-        setLoading(false);
-        return;
-      }
-
-      // Determine which collection to use based on the selected slot
       const slotCollection = slot === '10:30am-1:30pm' ? 'slot1' : 'slot2';
-
-      // Get the reference to the slot collection
       const slotCollectionRef = collection(db, slotCollection);
 
-      // Check the number of entries in the collection
-      const slotDocs = await getDocs(slotCollectionRef);
-      const entryCount = slotDocs.size;
-
-      if (entryCount >= 48) {
-        // If there are already 48 entries, prevent further registrations
-        setError('This slot is already full. Please choose a different slot.');
-        setLoading(false);
-        return;
-      }
-
-      // Create a transaction to ensure atomicity
+      // Run the transaction
       await runTransaction(db, async (transaction) => {
         const userQuery = query(slotCollectionRef, where('email', '==', email));
         const querySnapshot = await getDocs(userQuery);
 
-        if (querySnapshot.empty) {
-          // If no document with this email exists, add a new one
-          const newDocRef = doc(slotCollectionRef); // Automatically generates a new document ID
-          transaction.set(newDocRef, {
-            name: name,
-            email: email,
-            year: year,
-            slot: slot,
-            date: Timestamp.now(),
-          });
-        } else {
-          // If a document with this email already exists, throw an error (though this should be caught by checkIfRegistered)
-          throw new Error('This email is already registered for this slot.');
+        if (!querySnapshot.empty) {
+          throw new Error('You are already registered with this email.');
         }
+
+        // Get the number of entries in the slot collection during the transaction
+        const slotSnapshot = await getDocs(slotCollectionRef);
+        if (slotSnapshot.size >= 48) {
+          throw new Error(
+            'This slot is already full. Please choose a different slot.'
+          );
+        }
+
+        // Proceed with registration
+        const newDocRef = doc(slotCollectionRef);
+        transaction.set(newDocRef, {
+          name: name,
+          email: email,
+          year: year,
+          slot: slot,
+          date: Timestamp.now(),
+        });
       });
 
       setShowDialog(true);
     } catch (error) {
       console.error('Transaction failed: ', error);
-      setError('Something went wrong. Please try again.');
+      setError(error.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
       setName('');
@@ -150,6 +136,7 @@ const RSVPForm = () => {
       setYear('');
     }
   };
+
   const handleCloseDialog = () => {
     setShowDialog(false);
     navigate('/');
