@@ -247,11 +247,13 @@ const RSVPForm = () => {
 
       {showDialog && (
         <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center'>
-          <div className='bg-[#17173A] p-8 rounded-lg shadow-lg'>
-            <h3 className='text-xl font-semibold mb-4'>RSVP Successful!</h3>
-            <p className='mb-4'>
-              Your RSVP has been successfully submitted. You will receive an
-              email with your ticket shortly.
+          <div className='bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col'>
+            <h3 className='text-xl font-semibold mb-4 flex justify-center'>RSVP Successful!</h3>
+            <p className='mb-1 '>
+              Your RSVP has been successfully submitted.
+            </p>
+            <p className='mb-4 flex justify-center text-sm text-gray-400'>
+              You will receive your e-ticket shortly!
             </p>
             <button
               onClick={handleCloseDialog}
