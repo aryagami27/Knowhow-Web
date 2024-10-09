@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
   collection,
+  doc,
   addDoc,
   getDocs,
   query,
   where,
   Timestamp,
+  runTransaction,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +58,7 @@ const RSVPForm = () => {
         setSlot1Data(slot1Docs);
         setSlot2Data(slot2Docs);
 
-        if (slot1Count >= 48 && slot2Count >= 48) {
+        if (slot1Count >= 3 && slot2Count >= 3) {
           setSlotsFull(true);
         }
       } catch (error) {
@@ -83,59 +85,71 @@ const RSVPForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!validateEmail(email)) {
       setError('Email must be @somaiya.edu');
       return;
     }
     setError('');
     setLoading(true);
-    const isRegistered = await checkIfRegistered(email);
-    if (isRegistered) {
-      setError('You are already registered with this email.');
-      return;
-    }
 
     try {
-      if (slot === '10:30am-1:30pm') {
-        if (slot1Count <= 5) {
-          const slot1CollectionRef = collection(db, 'slot1');
-          await addDoc(slot1CollectionRef, {
-            name: name,
-            email: email,
-            year: year,
-            slot: slot,
-            date: Timestamp.now(),
-          });
-          setShowDialog(true);
-        } else {
-          setError('This slot is full. Please choose another one.');
-        }
-      } else if (slot === '2pm-5pm') {
-        if (slot2Count <= 5) {
-          const slot2CollectionRef = collection(db, 'slot2');
-          await addDoc(slot2CollectionRef, {
-            name: name,
-            email: email,
-            year: year,
-            slot: slot,
-            date: Timestamp.now(),
-          });
-          setShowDialog(true);
-        } else {
-          setError('This slot is full. Please choose another one.');
-        }
+      const isRegistered = await checkIfRegistered(email);
+      if (isRegistered) {
+        setError('You are already registered with this email.');
+        setLoading(false);
+        return;
       }
+
+      // Determine which collection to use based on the selected slot
+      const slotCollection = slot === '10:30am-1:30pm' ? 'slot1' : 'slot2';
+
+      // Get the reference to the slot collection
+      const slotCollectionRef = collection(db, slotCollection);
+
+      // Check the number of entries in the collection
+      const slotDocs = await getDocs(slotCollectionRef);
+      const entryCount = slotDocs.size;
+
+      if (entryCount >= 48) {
+        // If there are already 48 entries, prevent further registrations
+        setError('This slot is already full. Please choose a different slot.');
+        setLoading(false);
+        return;
+      }
+
+      // Create a transaction to ensure atomicity
+      await runTransaction(db, async (transaction) => {
+        const userQuery = query(slotCollectionRef, where('email', '==', email));
+        const querySnapshot = await getDocs(userQuery);
+
+        if (querySnapshot.empty) {
+          // If no document with this email exists, add a new one
+          const newDocRef = doc(slotCollectionRef); // Automatically generates a new document ID
+          transaction.set(newDocRef, {
+            name: name,
+            email: email,
+            year: year,
+            slot: slot,
+            date: Timestamp.now(),
+          });
+        } else {
+          // If a document with this email already exists, throw an error (though this should be caught by checkIfRegistered)
+          throw new Error('This email is already registered for this slot.');
+        }
+      });
+
+      setShowDialog(true);
     } catch (error) {
-      console.error('Error adding document: ', error);
-      setError(error.message);
+      console.error('Transaction failed: ', error);
+      setError('Something went wrong. Please try again.');
     } finally {
+      setLoading(false);
       setName('');
       setEmail('');
       setYear('');
-      setLoading(false);
     }
   };
-
   const handleCloseDialog = () => {
     setShowDialog(false);
     navigate('/');
