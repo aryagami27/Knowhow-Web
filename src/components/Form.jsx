@@ -125,6 +125,7 @@ const RSVPForm = () => {
                 <option value="FY" className='text-gray-700'>FY</option>
                 <option value="SY" className='text-gray-700'>SY</option>
                 <option value="TY" className='text-gray-700'>TY</option>
+                <option value="LY" className='text-gray-700'>LY</option>
               </select>
 
               <input
