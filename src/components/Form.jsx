@@ -58,13 +58,13 @@ const RSVPForm = () => {
         let slotCollectionRef = null;
 
         // Check if the chosen slot is available (less than 50)
-        if (slot === '10:30am-1:30pm' && slotData.slot1 < 50) {
+        if (slot === '10:30am-1:30pm' && slotData.slot1 < 48) {
           selectedSlot = 'slot1RSVPS';
           // Update the slot count
           await updateDoc(slotDocRef, { slot1: slotData.slot1 + 1 });
           // Reference the subcollection for slot1
           slotCollectionRef = collection(doc(db, 'slots', 'RSVP'), 'slot1RSVPS');
-        } else if (slot === '2pm-5pm' && slotData.slot2 < 50) {
+        } else if (slot === '2pm-5pm' && slotData.slot2 < 48) {
           selectedSlot = 'slot2RSVPS';
           // Update the slot count
           await updateDoc(slotDocRef, { slot2: slotData.slot2 + 1 });
