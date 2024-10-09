@@ -119,9 +119,6 @@ const RSVPForm = () => {
 
     setError("");
 
-    setError("");
-    setLoading(true);
-
     try {
       const isAlreadyRegistered = await checkIfRegistered(email);
       if (isAlreadyRegistered) {
