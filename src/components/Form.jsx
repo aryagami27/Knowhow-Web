@@ -104,7 +104,13 @@ const RSVPForm = () => {
         } else {
           throw new Error('This slot is full. Please choose another one.');
         }
-        await addDoc(slotCollectionRef, { name, year, email, slot });
+        await addDoc(slotCollectionRef, {
+          name,
+          year,
+          email,
+          slot,
+          date: Date.now(),
+        });
       });
 
       setShowDialog(true);
