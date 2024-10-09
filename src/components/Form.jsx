@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { collection, addDoc, getDocs, query, where } from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  Timestamp,
+} from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -82,7 +89,6 @@ const RSVPForm = () => {
     }
     setError('');
     setLoading(true);
-
     const isRegistered = await checkIfRegistered(email);
     if (isRegistered) {
       setError('You are already registered with this email.');
@@ -98,7 +104,7 @@ const RSVPForm = () => {
             email: email,
             year: year,
             slot: slot,
-            date: Date.now().toLocaleString(),
+            date: Timestamp.now(),
           });
           setShowDialog(true);
         } else {
@@ -112,7 +118,7 @@ const RSVPForm = () => {
             email: email,
             year: year,
             slot: slot,
-            date: Date.now().toLocaleString(),
+            date: Timestamp.now(),
           });
           setShowDialog(true);
         } else {
