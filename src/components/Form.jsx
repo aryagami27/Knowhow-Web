@@ -4,7 +4,6 @@ import {
   addDoc,
   doc,
   getDoc,
-  updateDoc,
   query,
   where,
   getDocs,
@@ -341,9 +340,21 @@ const RSVPForm = () => {
               </form>
             )}
           </div>
+
+          {/* Registration Details */}
+          <div className='bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1'>
+            <h3 className='text-2xl font-bold'>Registration Details</h3>
+            <ul className='list-disc list-inside space-y-2'>
+              <li>The link will be active until 96 users have registered</li>
+              <li>You must register using your official Somaiya email address</li>
+              <li>If you cancel, your spot will be made available for others</li>
+              <li>Each student can only RSVP once</li>
+            </ul>
+          </div>
         </div>
       </div>
 
+      {/* Submission Dialog */}
       {showDialog && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center">
           <div className="bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col">

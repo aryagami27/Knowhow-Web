@@ -38,7 +38,9 @@ function About() {
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1 aspect-square">
               <img src='./Meet2.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
-            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center"><img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' /></div>
+            <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center">
+            <img src='./Unlock.gif' className='w-full h-full object-cover rounded-2xl' />
+            </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1 aspect-square">
               <img src='./Princi.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
@@ -62,10 +64,10 @@ function About() {
             </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-2 flex justify-center items-center aspect-[2/1]"><img src='./Journey.gif' className='w-full h-full object-cover rounded-2xl' /></div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-1 col-span-1">
-              <img src='./appdev.webp' className='w-full h-full object-cover rounded-2xl' />
+              <img src='./Meet2.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full col-span-1 row-span-1">
-              <img src='./appdev.webp' className='w-full h-full object-cover rounded-2xl' />
+              <img src='./Princi.jpg' className='w-full h-full object-cover rounded-2xl' />
             </div>
             <div className="bg-[#24242C] rounded-2xl w-full h-full row-span-2 col-span-2 p-2 aspect-square text-ellipsis">
               <p className='font-bold text-sm'>Unlock Your Potential with KnowHow</p>
