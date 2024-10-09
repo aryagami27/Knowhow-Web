@@ -4,10 +4,11 @@ import {
   addDoc,
   doc,
   getDoc,
-  runTransaction,
+  updateDoc,
   query,
   where,
   getDocs,
+  runTransaction,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -21,8 +22,6 @@ const RSVPForm = () => {
   const [slotsFull, setSlotsFull] = useState(false);
   const [slotData, setSlotData] = useState({ slot1: 0, slot2: 0 });
   const [showDialog, setShowDialog] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const navigate = useNavigate();
 
@@ -63,30 +62,19 @@ const RSVPForm = () => {
       return;
     }
     setError('');
-    setLoading(true);
-    setButtonDisabled(true);
-
     try {
       const isAlreadyRegistered = await checkIfRegistered(email);
       if (isAlreadyRegistered) {
         setError('You have already RSVP’d for this event.');
-        setLoading(false);
-        setButtonDisabled(false);
         return;
       }
-
       await runTransaction(db, async (transaction) => {
         const slotDocRef = doc(db, 'slots', 'slotCounts');
         const slotDocSnap = await transaction.get(slotDocRef);
-
         if (!slotDocSnap.exists()) {
-          transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
+          throw new Error('Slot data not found');
         }
-
-        const slotData = slotDocSnap.exists()
-          ? slotDocSnap.data()
-          : { slot1: 0, slot2: 0 };
-
+        const slotData = slotDocSnap.data();
         let selectedSlot = '';
         let slotCollectionRef = null;
         if (slot === '10:30am-1:30pm' && slotData.slot1 < 48) {
@@ -108,14 +96,10 @@ const RSVPForm = () => {
         }
         await addDoc(slotCollectionRef, { name, year, email, slot });
       });
-
       setShowDialog(true);
     } catch (error) {
       console.error('Error adding document: ', error);
       setError(error.message);
-    } finally {
-      setLoading(false);
-      setButtonDisabled(false);
     }
   };
 
@@ -210,22 +194,21 @@ const RSVPForm = () => {
                 </select>
                 <button
                   type='submit'
-                  disabled={!isFormValid || buttonDisabled}
+                  disabled={!isFormValid}
                   className={`w-full py-2 rounded-full font-bold transition-colors duration-200 shadow-inner shadow-[#ffffff4f] ${
-                    isFormValid && !buttonDisabled
+                    isFormValid
                       ? 'bg-green-700 hover:bg-green-600 text-white'
                       : 'bg-gray-500 cursor-not-allowed'
                   }`}
                 >
-                  {loading ? 'Loading...' : 'RSVP'}
+                  RSVP
                 </button>
               </form>
             )}
           </div>
-
           <div className='bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1'>
             <h3 className='text-2xl font-bold'>Registration Details</h3>
-            <ul className='list-disc list-inside space-y-2 whitespace-nowrap'>
+            <ul className='list-disc list-inside space-y-2 '>
               <li>The link will be active until 96 users have registered</li>
               <li>
                 You must register using your official Somaiya email address
@@ -236,26 +219,22 @@ const RSVPForm = () => {
               <li>Each student can only RSVP once</li>
             </ul>
           </div>
-
-          {showDialog && (
-            <div
-              className='fixed inset-0 flex items-center justify-center z-50'
-              onClick={handleCloseDialog}
-            >
-              <div className='bg-white rounded-lg shadow-lg p-8 max-w-sm text-center'>
-                <h3 className='text-lg font-semibold mb-4'>RSVP Successful!</h3>
-                <p>Thank you for your RSVP.</p>
-                <button
-                  onClick={handleCloseDialog}
-                  className='mt-4 bg-blue-500 text-white px-4 py-2 rounded'
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
+      {showDialog && (
+        <div className='fixed inset-0 flex items-center justify-center z-50'>
+          <div className='bg-white rounded-lg p-6 text-center shadow-lg'>
+            <h3 className='text-2xl font-bold mb-4'>RSVP Successful!</h3>
+            <p>You have successfully RSVP'd for the event.</p>
+            <button
+              className='mt-4 py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600'
+              onClick={handleCloseDialog}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
