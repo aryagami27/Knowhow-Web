@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
   collection,
-  doc,
   addDoc,
-  getDocs,
+  doc,
+  getDoc,
   query,
   where,
-  Timestamp,
+  getDocs,
   runTransaction,
+  Timestamp,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -19,50 +20,22 @@ const RSVPForm = () => {
   const [year, setYear] = useState('');
   const [error, setError] = useState('');
   const [slotsFull, setSlotsFull] = useState(false);
-  const [slot1Count, setSlot1Count] = useState(0);
-  const [slot2Count, setSlot2Count] = useState(0);
-  const [slot1Data, setSlot1Data] = useState([]);
-  const [slot2Data, setSlot2Data] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [slotData, setSlotData] = useState({ slot1: 0, slot2: 0 });
   const [showDialog, setShowDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSlotCounts = async () => {
-      const slot1CollectionRef = collection(db, 'slot1');
-      const slot2CollectionRef = collection(db, 'slot2');
-
-      try {
-        const slot1Snapshot = await getDocs(slot1CollectionRef);
-        const slot2Snapshot = await getDocs(slot2CollectionRef);
-
-        const slot1Count = slot1Snapshot.docs.length;
-        const slot2Count = slot2Snapshot.docs.length;
-
-        setSlot1Count(slot1Count);
-        setSlot2Count(slot2Count);
-
-        const slot1Docs = slot1Snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-
-        const slot2Docs = slot2Snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        console.log(slot1Docs);
-
-        // Set the state with the retrieved data
-        setSlot1Data(slot1Docs);
-        setSlot2Data(slot2Docs);
-
-        if (slot1Count >= 3 && slot2Count >= 3) {
+      const slotDocRef = doc(db, 'slots', 'slotCounts');
+      const slotDocSnap = await getDoc(slotDocRef);
+      if (slotDocSnap.exists()) {
+        const data = slotDocSnap.data();
+        setSlotData(data);
+        if (data.slot1 >= 48 && data.slot2 >= 48) {
           setSlotsFull(true);
         }
-      } catch (error) {
-        console.error('Error fetching slot counts: ', error);
       }
     };
     fetchSlotCounts();
@@ -74,8 +47,8 @@ const RSVPForm = () => {
   };
 
   const checkIfRegistered = async (email) => {
-    const slot1RSVPRef = collection(db, 'slot1');
-    const slot2RSVPRef = collection(db, 'slot2');
+    const slot1RSVPRef = collection(doc(db, 'slots', 'RSVP'), 'slot1RSVPS');
+    const slot2RSVPRef = collection(doc(db, 'slots', 'RSVP'), 'slot2RSVPS');
     const querySlot1 = query(slot1RSVPRef, where('email', '==', email));
     const querySlot2 = query(slot2RSVPRef, where('email', '==', email));
     const slot1Snapshot = await getDocs(querySlot1);
@@ -90,52 +63,177 @@ const RSVPForm = () => {
       setError('Email must be @somaiya.edu');
       return;
     }
+
     setError('');
     setLoading(true);
 
     try {
-      const slotCollection = slot === '10:30am-1:30pm' ? 'slot1' : 'slot2';
-      const slotCollectionRef = collection(db, slotCollection);
+      const isAlreadyRegistered = await checkIfRegistered(email);
+      if (isAlreadyRegistered) {
+        setError('You have already RSVP’d for this event.');
+        return;
+      }
 
-      // Run the transaction
       await runTransaction(db, async (transaction) => {
-        const userQuery = query(slotCollectionRef, where('email', '==', email));
-        const querySnapshot = await getDocs(userQuery);
+        const slotDocRef = doc(db, 'slots', 'slotCounts');
+        const slotDocSnap = await transaction.get(slotDocRef);
 
-        if (!querySnapshot.empty) {
-          throw new Error('You are already registered with this email.');
+        if (!slotDocSnap.exists()) {
+          transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
         }
 
-        // Get the number of entries in the slot collection during the transaction
-        const slotSnapshot = await getDocs(slotCollectionRef);
-        if (slotSnapshot.size >= 48) {
-          throw new Error(
-            'This slot is already full. Please choose a different slot.'
+        const slotData = slotDocSnap.exists()
+          ? slotDocSnap.data()
+          : { slot1: 0, slot2: 0 };
+        let selectedSlot = '';
+        let slotCollectionRef = null;
+
+        if (slot === '10:30am-1:30pm' && slotData.slot1 < 48) {
+          selectedSlot = 'slot1RSVPS';
+          transaction.update(slotDocRef, { slot1: slotData.slot1 + 1 });
+          slotCollectionRef = collection(
+            doc(db, 'slots', 'RSVP'),
+            'slot1RSVPS'
           );
+        } else if (slot === '2pm-5pm' && slotData.slot2 < 48) {
+          selectedSlot = 'slot2RSVPS';
+          transaction.update(slotDocRef, { slot2: slotData.slot2 + 1 });
+          slotCollectionRef = collection(
+            doc(db, 'slots', 'RSVP'),
+            'slot2RSVPS'
+          );
+        } else {
+          throw new Error('This slot is full. Please choose another one.');
         }
-
-        // Proceed with registration
-        const newDocRef = doc(slotCollectionRef);
-        transaction.set(newDocRef, {
-          name: name,
-          email: email,
-          year: year,
-          slot: slot,
+        await addDoc(slotCollectionRef, {
+          name,
+          year,
+          email,
+          slot,
           date: Timestamp.now(),
         });
       });
 
       setShowDialog(true);
-    } catch (error) {
-      console.error('Transaction failed: ', error);
-      setError(error.message || 'Something went wrong. Please try again.');
-    } finally {
-      setLoading(false);
       setName('');
       setEmail('');
       setYear('');
+      setSlot('');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+      setError(
+        error.message || 'An unexpected error occurred. Please try again.'
+      );
+    } finally {
+      setLoading(false);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Validate email format
+  //   if (!validateEmail(email)) {
+  //     setError("Email must be @somaiya.edu");
+  //     return;
+  //   }
+
+  //   setError(""); // Clear any existing errors
+  //   setLoading(true); // Start loading
+
+  //   try {
+  //     await runTransaction(db, async (transaction) => {
+  //       // Reference to the slotCounts document
+  //       const slotDocRef = doc(db, "slots", "slotCounts");
+  //       const slotDocSnap = await transaction.get(slotDocRef);
+
+  //       // At this point, slotCounts should exist due to useEffect initialization
+  //       if (!slotDocSnap.exists()) {
+  //         throw new Error(
+  //           "Slot counts not initialized. Please try again later."
+  //         );
+  //       }
+
+  //       const slotData = slotDocSnap.data();
+
+  //       // Normalize email to lowercase for consistency
+  //       const normalizedEmail = email.toLowerCase();
+
+  //       // References to both RSVP subcollections
+  //       const slot1RSVPRef = collection(doc(db, "slots", "RSVP"), "slot1RSVP");
+  //       const slot2RSVPRef = collection(doc(db, "slots", "RSVP"), "slot2RSVP");
+
+  //       // Create references for the user's RSVP in both subcollections
+  //       const userSlot1RSVPRef = doc(slot1RSVPRef, normalizedEmail);
+  //       const userSlot2RSVPRef = doc(slot2RSVPRef, normalizedEmail);
+
+  //       // Fetch the user's RSVP documents in both subcollections
+  //       const [userSlot1RSVPSnap, userSlot2RSVPSnap] = await Promise.all([
+  //         transaction.get(userSlot1RSVPRef),
+  //         transaction.get(userSlot2RSVPRef),
+  //       ]);
+
+  //       // Check if the user has already RSVP'd in either slot
+  //       if (userSlot1RSVPSnap.exists() || userSlot2RSVPSnap.exists()) {
+  //         throw new Error("You have already RSVP’d for this event.");
+  //       }
+
+  //       // Determine the selected slot and check availability
+  //       let selectedSlot = "";
+  //       let rsvpCollectionRef = null;
+
+  //       if (slot === "10:30am-1:30pm") {
+  //         if (slotData.slot1 >= 48) {
+  //           throw new Error(
+  //             "The 10:30 am - 01:30 pm slot is full. Please choose another one."
+  //           );
+  //         }
+  //         selectedSlot = "slot1";
+  //         rsvpCollectionRef = slot1RSVPRef;
+  //       } else if (slot === "2pm-5pm") {
+  //         if (slotData.slot2 >= 48) {
+  //           throw new Error(
+  //             "The 02:00 pm - 05:00 pm slot is full. Please choose another one."
+  //           );
+  //         }
+  //         selectedSlot = "slot2";
+  //         rsvpCollectionRef = slot2RSVPRef;
+  //       } else {
+  //         throw new Error("Invalid time slot selected.");
+  //       }
+
+  //       // All reads are complete. Now perform writes.
+
+  //       // Increment the slot count
+  //       const updatedSlotData = {};
+  //       updatedSlotData[selectedSlot] = slotData[selectedSlot] + 1;
+  //       transaction.update(slotDocRef, updatedSlotData);
+
+  //       // Add the RSVP entry to the appropriate subcollection using email as the document ID
+  //       const userRSVPRef = doc(rsvpCollectionRef, normalizedEmail);
+  //       transaction.set(userRSVPRef, {
+  //         name,
+  //         year,
+  //         email: normalizedEmail,
+  //         slot,
+  //         timestamp: new Date(),
+  //       });
+  //     });
+
+  //     // If the transaction succeeds, show the success dialog
+  //     setShowDialog(true);
+  //     // Optionally, reset the form fields
+  //     setName("");
+  //     setEmail("");
+  //     setYear("");
+  //     setSlot("");
+  //   } catch (error) {
+  //     console.error("Error adding document: ", error);
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false); // End loading
+  //   }
+  // };
 
   const handleCloseDialog = () => {
     setShowDialog(false);
@@ -214,14 +312,14 @@ const RSVPForm = () => {
                   <option
                     value='10:30am-1:30pm'
                     className='text-gray-700'
-                    disabled={slot1Count >= 48}
+                    disabled={slotData.slot1 >= 48}
                   >
                     10:30 am to 01:30 pm
                   </option>
                   <option
                     value='2pm-5pm'
                     className='text-gray-700'
-                    disabled={slot2Count >= 48}
+                    disabled={slotData.slot2 >= 48}
                   >
                     02:00 pm to 05:00 pm
                   </option>
@@ -263,9 +361,11 @@ const RSVPForm = () => {
               </form>
             )}
           </div>
+
+          {/* Registration Details */}
           <div className='bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1'>
             <h3 className='text-2xl font-bold'>Registration Details</h3>
-            <ul className='list-disc list-inside space-y-2 '>
+            <ul className='list-disc list-inside space-y-2'>
               <li>The link will be active until 96 users have registered</li>
               <li>
                 You must register using your official Somaiya email address
@@ -278,6 +378,8 @@ const RSVPForm = () => {
           </div>
         </div>
       </div>
+
+      {/* Submission Dialog */}
       {showDialog && (
         <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center'>
           <div className='bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col'>
@@ -300,5 +402,4 @@ const RSVPForm = () => {
     </div>
   );
 };
-
 export default RSVPForm;
