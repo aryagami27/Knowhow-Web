@@ -112,49 +112,58 @@ const RSVPForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validate email format
     if (!validateEmail(email)) {
       setError("Email must be @somaiya.edu");
       return;
     }
 
-    setError("");
-    setLoading(true);
+    setError(""); // Clear any existing errors
+    setLoading(true); // Start loading
 
     try {
       await runTransaction(db, async (transaction) => {
+        // Reference to the slotCounts document
         const slotDocRef = doc(db, "slots", "slotCounts");
         const slotDocSnap = await transaction.get(slotDocRef);
 
+        // At this point, slotCounts should exist due to useEffect initialization
         if (!slotDocSnap.exists()) {
-          transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
+          throw new Error(
+            "Slot counts not initialized. Please try again later."
+          );
         }
 
-        const currentSlotData = slotDocSnap.exists()
-          ? slotDocSnap.data()
-          : { slot1: 0, slot2: 0 };
+        const slotData = slotDocSnap.data();
 
+        // Normalize email to lowercase for consistency
         const normalizedEmail = email.toLowerCase();
 
+        // References to both RSVP subcollections
         const slot1RSVPRef = collection(doc(db, "slots", "RSVP"), "slot1RSVP");
         const slot2RSVPRef = collection(doc(db, "slots", "RSVP"), "slot2RSVP");
 
+        // Create references for the user's RSVP in both subcollections
         const userSlot1RSVPRef = doc(slot1RSVPRef, normalizedEmail);
         const userSlot2RSVPRef = doc(slot2RSVPRef, normalizedEmail);
 
+        // Fetch the user's RSVP documents in both subcollections
         const [userSlot1RSVPSnap, userSlot2RSVPSnap] = await Promise.all([
           transaction.get(userSlot1RSVPRef),
           transaction.get(userSlot2RSVPRef),
         ]);
 
+        // Check if the user has already RSVP'd in either slot
         if (userSlot1RSVPSnap.exists() || userSlot2RSVPSnap.exists()) {
           throw new Error("You have already RSVP’d for this event.");
         }
 
+        // Determine the selected slot and check availability
         let selectedSlot = "";
         let rsvpCollectionRef = null;
 
         if (slot === "10:30am-1:30pm") {
-          if (currentSlotData.slot1 >= 48) {
+          if (slotData.slot1 >= 48) {
             throw new Error(
               "The 10:30 am - 01:30 pm slot is full. Please choose another one."
             );
@@ -162,7 +171,7 @@ const RSVPForm = () => {
           selectedSlot = "slot1";
           rsvpCollectionRef = slot1RSVPRef;
         } else if (slot === "2pm-5pm") {
-          if (currentSlotData.slot2 >= 48) {
+          if (slotData.slot2 >= 48) {
             throw new Error(
               "The 02:00 pm - 05:00 pm slot is full. Please choose another one."
             );
@@ -173,10 +182,14 @@ const RSVPForm = () => {
           throw new Error("Invalid time slot selected.");
         }
 
+        // All reads are complete. Now perform writes.
+
+        // Increment the slot count
         const updatedSlotData = {};
-        updatedSlotData[selectedSlot] = currentSlotData[selectedSlot] + 1;
+        updatedSlotData[selectedSlot] = slotData[selectedSlot] + 1;
         transaction.update(slotDocRef, updatedSlotData);
 
+        // Add the RSVP entry to the appropriate subcollection using email as the document ID
         const userRSVPRef = doc(rsvpCollectionRef, normalizedEmail);
         transaction.set(userRSVPRef, {
           name,
@@ -187,7 +200,9 @@ const RSVPForm = () => {
         });
       });
 
+      // If the transaction succeeds, show the success dialog
       setShowDialog(true);
+      // Optionally, reset the form fields
       setName("");
       setEmail("");
       setYear("");
@@ -196,7 +211,7 @@ const RSVPForm = () => {
       console.error("Error adding document: ", error);
       setError(error.message);
     } finally {
-      setLoading(false);
+      setLoading(false); // End loading
     }
   };
 
@@ -351,5 +366,4 @@ const RSVPForm = () => {
     </div>
   );
 };
-
 export default RSVPForm;
