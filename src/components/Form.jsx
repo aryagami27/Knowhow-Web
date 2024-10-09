@@ -9,6 +9,7 @@ import {
   where,
   getDocs,
   runTransaction,
+  Timestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
@@ -49,10 +50,16 @@ const RSVPForm = () => {
       return;
     }
 
-    setError(""); // Clear any existing errors
-    setLoading(true); // Start loading
+    setError("");
+    setLoading(true);
 
     try {
+      const isAlreadyRegistered = await checkIfRegistered(email);
+      if (isAlreadyRegistered) {
+        setError("You have already RSVP’d for this event.");
+        return;
+      }
+
       await runTransaction(db, async (transaction) => {
         const slotDocRef = doc(db, "slots", "slotCounts");
         const slotDocSnap = await transaction.get(slotDocRef);
@@ -117,9 +124,9 @@ const RSVPForm = () => {
         transaction.set(userRSVPRef, {
           name,
           year,
-          email: normalizedEmail,
+          email,
           slot,
-          timestamp: new Date(),
+          date: Timestamp.now(),
         });
       });
 
@@ -130,11 +137,119 @@ const RSVPForm = () => {
       setSlot("");
     } catch (error) {
       console.error("Error adding document: ", error);
-      setError(error.message);
+      setError(
+        error.message || "An unexpected error occurred. Please try again."
+      );
     } finally {
-      setLoading(false); // End loading
+      setLoading(false);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Validate email format
+  //   if (!validateEmail(email)) {
+  //     setError("Email must be @somaiya.edu");
+  //     return;
+  //   }
+
+  //   setError(""); // Clear any existing errors
+  //   setLoading(true); // Start loading
+
+  //   try {
+  //     await runTransaction(db, async (transaction) => {
+  //       // Reference to the slotCounts document
+  //       const slotDocRef = doc(db, "slots", "slotCounts");
+  //       const slotDocSnap = await transaction.get(slotDocRef);
+
+  //       // At this point, slotCounts should exist due to useEffect initialization
+  //       if (!slotDocSnap.exists()) {
+  //         throw new Error(
+  //           "Slot counts not initialized. Please try again later."
+  //         );
+  //       }
+
+  //       const slotData = slotDocSnap.data();
+
+  //       // Normalize email to lowercase for consistency
+  //       const normalizedEmail = email.toLowerCase();
+
+  //       // References to both RSVP subcollections
+  //       const slot1RSVPRef = collection(doc(db, "slots", "RSVP"), "slot1RSVP");
+  //       const slot2RSVPRef = collection(doc(db, "slots", "RSVP"), "slot2RSVP");
+
+  //       // Create references for the user's RSVP in both subcollections
+  //       const userSlot1RSVPRef = doc(slot1RSVPRef, normalizedEmail);
+  //       const userSlot2RSVPRef = doc(slot2RSVPRef, normalizedEmail);
+
+  //       // Fetch the user's RSVP documents in both subcollections
+  //       const [userSlot1RSVPSnap, userSlot2RSVPSnap] = await Promise.all([
+  //         transaction.get(userSlot1RSVPRef),
+  //         transaction.get(userSlot2RSVPRef),
+  //       ]);
+
+  //       // Check if the user has already RSVP'd in either slot
+  //       if (userSlot1RSVPSnap.exists() || userSlot2RSVPSnap.exists()) {
+  //         throw new Error("You have already RSVP’d for this event.");
+  //       }
+
+  //       // Determine the selected slot and check availability
+  //       let selectedSlot = "";
+  //       let rsvpCollectionRef = null;
+
+  //       if (slot === "10:30am-1:30pm") {
+  //         if (slotData.slot1 >= 48) {
+  //           throw new Error(
+  //             "The 10:30 am - 01:30 pm slot is full. Please choose another one."
+  //           );
+  //         }
+  //         selectedSlot = "slot1";
+  //         rsvpCollectionRef = slot1RSVPRef;
+  //       } else if (slot === "2pm-5pm") {
+  //         if (slotData.slot2 >= 48) {
+  //           throw new Error(
+  //             "The 02:00 pm - 05:00 pm slot is full. Please choose another one."
+  //           );
+  //         }
+  //         selectedSlot = "slot2";
+  //         rsvpCollectionRef = slot2RSVPRef;
+  //       } else {
+  //         throw new Error("Invalid time slot selected.");
+  //       }
+
+  //       // All reads are complete. Now perform writes.
+
+  //       // Increment the slot count
+  //       const updatedSlotData = {};
+  //       updatedSlotData[selectedSlot] = slotData[selectedSlot] + 1;
+  //       transaction.update(slotDocRef, updatedSlotData);
+
+  //       // Add the RSVP entry to the appropriate subcollection using email as the document ID
+  //       const userRSVPRef = doc(rsvpCollectionRef, normalizedEmail);
+  //       transaction.set(userRSVPRef, {
+  //         name,
+  //         year,
+  //         email: normalizedEmail,
+  //         slot,
+  //         timestamp: new Date(),
+  //       });
+  //     });
+
+  //     // If the transaction succeeds, show the success dialog
+  //     setShowDialog(true);
+  //     // Optionally, reset the form fields
+  //     setName("");
+  //     setEmail("");
+  //     setYear("");
+  //     setSlot("");
+  //   } catch (error) {
+  //     console.error("Error adding document: ", error);
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false); // End loading
+  //   }
+  // };
 
   const handleCloseDialog = () => {
     setShowDialog(false);
