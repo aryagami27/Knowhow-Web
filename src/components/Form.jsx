@@ -4,6 +4,7 @@ import {
   addDoc,
   doc,
   getDoc,
+  updateDoc,
   query,
   where,
   getDocs,
@@ -25,21 +26,6 @@ const RSVPForm = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchSlotCounts = async () => {
-      const slotDocRef = doc(db, "slots", "slotCounts");
-      const slotDocSnap = await getDoc(slotDocRef);
-      if (slotDocSnap.exists()) {
-        const data = slotDocSnap.data();
-        setSlotData(data);
-        if (data.slot1 >= 48 && data.slot2 >= 48) {
-          setSlotsFull(true);
-        }
-      }
-    };
-    fetchSlotCounts();
-  }, []);
-
   const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@somaiya\.edu$/;
     return emailRegex.test(email);
@@ -54,64 +40,10 @@ const RSVPForm = () => {
     const slot2Snapshot = await getDocs(querySlot2);
     return !slot1Snapshot.empty || !slot2Snapshot.empty;
   };
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateEmail(email)) {
-  //     setError("Email must be @somaiya.edu");
-  //     return;
-  //   }
-  //   setError("");
-  //   try {
-  //     const isAlreadyRegistered = await checkIfRegistered(email);
-  //     if (isAlreadyRegistered) {
-  //       setError("You have already RSVP’d for this event.");
-  //       return;
-  //     }
 
-  //     await runTransaction(db, async (transaction) => {
-  //       const slotDocRef = doc(db, "slots", "slotCounts");
-  //       const slotDocSnap = await transaction.get(slotDocRef);
-
-  //       if (!slotDocSnap.exists()) {
-  //         transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
-  //       }
-
-  //       const slotData = slotDocSnap.exists()
-  //         ? slotDocSnap.data()
-  //         : { slot1: 0, slot2: 0 };
-
-  //       let selectedSlot = "";
-  //       let slotCollectionRef = null;
-  //       if (slot === "10:30am-1:30pm" && slotData.slot1 < 48) {
-  //         selectedSlot = "slot1RSVPS";
-  //         transaction.update(slotDocRef, { slot1: slotData.slot1 + 1 });
-  //         slotCollectionRef = collection(
-  //           doc(db, "slots", "RSVP"),
-  //           "slot1RSVPS"
-  //         );
-  //       } else if (slot === "2pm-5pm" && slotData.slot2 < 48) {
-  //         selectedSlot = "slot2RSVPS";
-  //         transaction.update(slotDocRef, { slot2: slotData.slot2 + 1 });
-  //         slotCollectionRef = collection(
-  //           doc(db, "slots", "RSVP"),
-  //           "slot2RSVPS"
-  //         );
-  //       } else {
-  //         throw new Error("This slot is full. Please choose another one.");
-  //       }
-  //       await addDoc(slotCollectionRef, { name, year, email, slot });
-  //     });
-
-  //     setShowDialog(true);
-  //   } catch (error) {
-  //     console.error("Error adding document: ", error);
-  //     setError(error.message);
-  //   }
-  // };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate email format
     if (!validateEmail(email)) {
       setError("Email must be @somaiya.edu");
       return;
@@ -122,29 +54,25 @@ const RSVPForm = () => {
 
     try {
       await runTransaction(db, async (transaction) => {
-        // Reference to the slotCounts document
         const slotDocRef = doc(db, "slots", "slotCounts");
         const slotDocSnap = await transaction.get(slotDocRef);
-
-        // At this point, slotCounts should exist due to useEffect initialization
-        if (!slotDocSnap.exists()) {
-          transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
-        }
-
-        const slotData = slotDocSnap.data();
-
         // Normalize email to lowercase for consistency
         const normalizedEmail = email.toLowerCase();
 
         // References to both RSVP subcollections
-        const slot1RSVPRef = collection(doc(db, "slots", "RSVP"), "slot1RSVP");
-        const slot2RSVPRef = collection(doc(db, "slots", "RSVP"), "slot2RSVP");
+        const slot1RSVPRef = collection(doc(db, "slots", "RSVP"), "slot1RSVPS");
+        const slot2RSVPRef = collection(doc(db, "slots", "RSVP"), "slot2RSVPS");
 
-        // Create references for the user's RSVP in both subcollections
         const userSlot1RSVPRef = doc(slot1RSVPRef, normalizedEmail);
         const userSlot2RSVPRef = doc(slot2RSVPRef, normalizedEmail);
+        if (!slotDocSnap.exists()) {
+          throw new Error(
+            "Slot counts not initialized. Please try again later."
+          );
+        }
 
-        // Fetch the user's RSVP documents in both subcollections
+        const slotData = slotDocSnap.data();
+
         const [userSlot1RSVPSnap, userSlot2RSVPSnap] = await Promise.all([
           transaction.get(userSlot1RSVPRef),
           transaction.get(userSlot2RSVPRef),
@@ -179,8 +107,6 @@ const RSVPForm = () => {
           throw new Error("Invalid time slot selected.");
         }
 
-        // All reads are complete. Now perform writes.
-
         // Increment the slot count
         const updatedSlotData = {};
         updatedSlotData[selectedSlot] = slotData[selectedSlot] + 1;
@@ -197,9 +123,7 @@ const RSVPForm = () => {
         });
       });
 
-      // If the transaction succeeds, show the success dialog
-      setShowDialog(true);
-      // Optionally, reset the form fields
+      setShowDialog(true); // Show the success dialog
       setName("");
       setEmail("");
       setYear("");
@@ -338,25 +262,9 @@ const RSVPForm = () => {
               </form>
             )}
           </div>
-
-          {/* Registration Details */}
-          <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold">Registration Details</h3>
-            <ul className="list-disc list-inside space-y-2">
-              <li>The link will be active until 96 users have registered</li>
-              <li>
-                You must register using your official Somaiya email address
-              </li>
-              <li>
-                If you cancel, your spot will be made available for others
-              </li>
-              <li>Each student can only RSVP once</li>
-            </ul>
-          </div>
         </div>
       </div>
 
-      {/* Submission Dialog */}
       {showDialog && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center">
           <div className="bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col">
