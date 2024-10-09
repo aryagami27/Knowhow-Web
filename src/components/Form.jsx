@@ -68,13 +68,19 @@ const RSVPForm = () => {
         setError('You have already RSVP’d for this event.');
         return;
       }
+
       await runTransaction(db, async (transaction) => {
         const slotDocRef = doc(db, 'slots', 'slotCounts');
         const slotDocSnap = await transaction.get(slotDocRef);
+
         if (!slotDocSnap.exists()) {
-          throw new Error('Slot data not found');
+          transaction.set(slotDocRef, { slot1: 0, slot2: 0 });
         }
-        const slotData = slotDocSnap.data();
+
+        const slotData = slotDocSnap.exists()
+          ? slotDocSnap.data()
+          : { slot1: 0, slot2: 0 };
+
         let selectedSlot = '';
         let slotCollectionRef = null;
         if (slot === '10:30am-1:30pm' && slotData.slot1 < 48) {
@@ -96,6 +102,7 @@ const RSVPForm = () => {
         }
         await addDoc(slotCollectionRef, { name, year, email, slot });
       });
+
       setShowDialog(true);
     } catch (error) {
       console.error('Error adding document: ', error);
