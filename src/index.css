@@ -25,3 +25,16 @@ body{
 .clippath{
     clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 65% 20%, 65% 0);
 }
+
+@keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 3s linear infinite;
+  }
