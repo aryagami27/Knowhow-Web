@@ -39,7 +39,7 @@ const RSVPForm = () => {
       {overlay && (
         <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-75 flex justify-center items-center">
           <div className="bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col">
-            <h3 className="text-xl font-semibold mb-1 flex justify-center">
+            <h3 className="text-xl font-semibold mb-1 flex justify-center text-center">
               Sorry! This form has been closed
             </h3>
             <p className="mb-4 flex justify-center text-sm">
