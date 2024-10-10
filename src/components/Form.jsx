@@ -377,18 +377,34 @@ const RSVPForm = () => {
               </form>
             )}
           </div>
+          <div className="bg-white bg-opacity-10 backdrop-blur-md shadow-lg rounded-lg p-6 text-white space-y-4 lg:order-2 lg:col-span-1">
+        <h3 className="text-2xl font-bold">Registration Details</h3>
+        <ul className="list-disc list-inside space-y-2 ">
+          <li>The link will be active until 96 users have registered</li>
+          <li>
+            You must register using your official Somaiya email address
+          </li>
+          <li>
+            If you cancel, your spot will be made available for others
+          </li>
+          <li>Each student can only RSVP once</li>
+        </ul>
+      </div>
         </div>
       </div>
 
       {showDialog && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-75 flex justify-center items-center">
           <div className="bg-[#17173A] p-8 rounded-lg shadow-lg justify-center flex flex-col">
-            <h3 className="text-xl font-semibold mb-4 flex justify-center">
+            {/* <h3 className="text-xl font-semibold mb-4 flex justify-center">
               RSVP Successful!
-            </h3>
-            <p className="mb-1 ">Your RSVP has been successfully submitted.</p>
+            </h3> */}
+            <h3 className="text-xl font-semibold mb-1 flex justify-center">Your Form has been submitted</h3>
+            <p className="mb-4 flex justify-center text-sm">
+              RSVP has been submitted successfully
+            </p>
             <p className="mb-4 flex justify-center text-sm text-gray-400">
-              You will receive your e-ticket shortly!
+              You will receive your e-ticket shortly
             </p>
             <button
               onClick={handleCloseDialog}
