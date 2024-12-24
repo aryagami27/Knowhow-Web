@@ -3,7 +3,7 @@ import Events from './Events'
 function About() {
   return (
     <div>
-      <Events />
+      {/* <Events /> */}
       <div className="col-span-2 mt-12">
         <h2 className="sm:text-4xl text-3xl font-bold text-white text-center sm:mb-4">
           About <span className="text-[#AF66DF]">KnowHow</span>
